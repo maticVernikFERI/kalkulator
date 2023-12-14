@@ -6,7 +6,8 @@
 body {
   background-color: #f4f4f4;
 }
-td {
+td,
+th {
   height: 100px;
   border: 1px solid black;
   width: 100px;
