@@ -29,3 +29,15 @@ button {
   text-align: end;
   cursor: default;
 }
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+  gap: 1rem;
+  flex-direction: column;
+}
+#links {
+  display: flex;
+  gap: 1rem;
+}
