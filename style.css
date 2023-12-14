@@ -7,7 +7,9 @@ body {
   background-color: #f4f4f4;
 }
 td {
-  height: 50px;
+  height: 100px;
   border: 1px solid black;
-  width: 50px;
+  width: 100px;
+  text-align: center;
+  font-size: 50px;
 }
