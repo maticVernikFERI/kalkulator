@@ -4,53 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kalkulator</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100dvh;
+        gap: 1rem;
+      }
+    </style>
     <link rel="stylesheet" href="style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   </head>
   <body>
-    <a href="index.html"><button>Kalkulator 1</button></a>
+    <a href="kalk1.html"><button>Kalkulator 1</button></a>
     <a href="kalk2.html"><button>Kalkulator 2</button></a>
     <a href="kalk3.html"><button>Kalkulator 3</button></a>
-    <div class="container">
-      <table class="table">
-        <tr>
-          <td colspan="4" id="display"></td>
-          <td id="del">Del</td>
-        </tr>
-        <tr>
-          <td id="7">7</td>
-          <td id="8">8</td>
-          <td id="9">9</td>
-          <td id="%">%</td>
-          <td id="/">/</td>
-        </tr>
-        <tr>
-          <td id="4">4</td>
-          <td id="5">5</td>
-          <td id="6">6</td>
-          <td id="pow">pow</td>
-          <td id="x">x</td>
-        </tr>
-        <tr>
-          <td id="1">1</td>
-          <td id="2">2</td>
-          <td id="3">3</td>
-          <td id="sqrt">sqrt</td>
-          <td id="+">+</td>
-        </tr>
-        <tr>
-          <td id="0">0</td>
-          <td id="+-">+/-</td>
-          <td id=".">.</td>
-          <td id="=">=</td>
-          <td id="-">-</td>
-        </tr>
-      </table>
-    </div>
-    <script>
-      var display = document.getElementById("display");
-      var buttons = document.querySelectorAll("td");
-      display.innerHTML = "0";
-    </script>
   </body>
 </html>
