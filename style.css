@@ -18,7 +18,7 @@ td:hover {
   background-color: #e6e6e6;
 }
 td:active {
-  transform: translateY(2px); /* Move down */
+  transform: translateY(2px);
 }
 button {
   height: 50px;
@@ -28,6 +28,8 @@ button {
 #display {
   text-align: end;
   cursor: default;
+  font-size: 30px;
+  overflow-x: auto;
 }
 body {
   display: flex;
