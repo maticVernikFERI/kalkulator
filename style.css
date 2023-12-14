@@ -12,8 +12,20 @@ td {
   width: 100px;
   text-align: center;
   font-size: 50px;
+  cursor: pointer;
+}
+td:hover {
+  background-color: #e6e6e6;
+}
+td:active {
+  transform: translateY(2px); /* Move down */
 }
 button {
   height: 50px;
   width: 150px;
+  cursor: pointer;
+}
+#display {
+  text-align: end;
+  cursor: default;
 }
