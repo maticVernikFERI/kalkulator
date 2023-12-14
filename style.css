@@ -13,3 +13,7 @@ td {
   text-align: center;
   font-size: 50px;
 }
+button {
+  height: 50px;
+  width: 150px;
+}
