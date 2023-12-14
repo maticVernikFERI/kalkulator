@@ -7,7 +7,7 @@ $(document).ready(function () {
       $("#display").html(input);
     } else if (vnos == "pow" || vnos == "sqrt") {
     } else {
-      input += this.innerHTML + " ";
+      input += this.innerHTML;
       $("#display").html(input);
     }
   });
