@@ -3,7 +3,7 @@ $(document).ready(function () {
   let calculationPerformed = false;
   $("td").click(function () {
     vnos = this.innerHTML;
-    if (vnos == "Del") {
+    if (vnos == "C") {
       if (calculationPerformed) {
         input = "0";
         calculationPerformed = false;
@@ -11,7 +11,7 @@ $(document).ready(function () {
         input = "";
       }
       $("#display").html(input);
-    } else if (vnos == "C") {
+    } else if (vnos == "Del") {
       input = input.slice(0, -1);
       $("#display").html(input);
     } else if (vnos == "=") {
