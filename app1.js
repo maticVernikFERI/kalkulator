@@ -74,6 +74,9 @@ function addPriority(input) {
       while (j >= 0 && !isNaN(input[j])) {
         j--;
       }
+      if (j < 0) {
+        break;
+      }
       input = insertAt(input, j + 1, "(");
       bracketIndex = j + 1;
       startHighPriority = true;
