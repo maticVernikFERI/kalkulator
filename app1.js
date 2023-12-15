@@ -1,9 +1,15 @@
 $(document).ready(function () {
   input = "0";
+  let calculationPerformed = false;
   $("td").click(function () {
     vnos = this.innerHTML;
     if (vnos == "Del") {
-      input = "";
+      if (calculationPerformed) {
+        input = "0";
+        calculationPerformed = false;
+      } else {
+        input = "";
+      }
       $("#display").html(input);
     } else if (vnos == "C") {
       input = input.slice(0, -1);
@@ -12,12 +18,18 @@ $(document).ready(function () {
       try {
         input = calculate(input);
         $("#display").html(input);
+        calculationPerformed = true;
       } catch (err) {
         input = "Error";
         $("#display").html(input);
+        input = "";
       }
     } else {
-      if (input === "0" || input === "Error" || input === "NaN") {
+      if (
+        $("#display").html() === "0" ||
+        $("#display").html() === "Error" ||
+        $("#display").html() === "NaN"
+      ) {
         input = this.innerHTML;
       } else {
         input += this.innerHTML;
@@ -101,48 +113,85 @@ function findBracketIndex(e) {
   return bracketPairs;
 }
 function calculateBracket(e) {
-  let total = 0;
+  let elements = [];
   let i = 0;
   while (i < e.length) {
-    let num1 = "",
-      num2 = "";
-    while (i < e.length && (isDigit(e[i]) || e[i] === ".")) {
-      num1 += e[i];
+    if (e[i] === "(") {
+      let bracketCount = 1;
+      let innerExpression = "";
       i++;
-    }
-    let operator = e[i];
-    i++;
-    while (i < e.length && (isDigit(e[i]) || e[i] === ".")) {
-      num2 += e[i];
-      i++;
-    }
-    num1 = num1 ? parseFloat(num1) : 0;
-    num2 = num2 ? parseFloat(num2) : 0;
-    switch (operator) {
-      case "+":
-        total += num1 + num2;
-        break;
-      case "-":
-        total += num1 - num2;
-        break;
-      case "×":
-        total += num1 * num2;
-        break;
-      case "÷":
-        total += num1 / num2;
-        break;
-      case "^":
-        total += Math.pow(num1, num2);
-        break;
-      case "%":
-        total += num1 % num2;
-        break;
-      case "√":
-        total += Math.sqrt(num2);
-        break;
+      while (bracketCount > 0) {
+        if (e[i] === "(") {
+          bracketCount++;
+        } else if (e[i] === ")") {
+          bracketCount--;
+        }
+        if (bracketCount > 0) {
+          innerExpression += e[i];
+        }
+        i++;
+      }
+      let result = calculateBracket(innerExpression);
+      elements.push(result);
+      if (!isNaN(result) && i < e.length && e[i] !== ")") {
+        elements.push(e[i]);
+        i++;
+      }
+    } else {
+      let num = "";
+      while (i < e.length && (isDigit(e[i]) || e[i] === ".")) {
+        num += e[i];
+        i++;
+      }
+      num = num ? parseFloat(num) : 0;
+      elements.push(num);
+      if (i < e.length && e[i] !== ")") {
+        elements.push(e[i]);
+        i++;
+      }
     }
   }
-  return total;
+
+  ["^", "√", "×", "÷", "%", "+", "-"].forEach((operator) => {
+    while (elements.includes(operator)) {
+      let index = elements.indexOf(operator);
+      let num1 = elements[index - 1];
+      let num2 = elements[index + 1];
+      let result;
+      switch (operator) {
+        case "+":
+          result = (num1 + num2).toFixed(4);
+          break;
+        case "-":
+          result = (num1 - num2).toFixed(4);
+          break;
+        case "×":
+          result = (num1 * num2).toFixed(4);
+          break;
+        case "÷":
+          if (num2 === 0) {
+            throw new Error("Division by zero is not allowed");
+          }
+          result = (num1 / num2).toFixed(4);
+          break;
+        case "^":
+          result = Math.pow(num1, num2).toFixed(4);
+          break;
+        case "%":
+          result = (num1 % num2).toFixed(4);
+          break;
+        case "√":
+          if (num2 < 0) {
+            throw new Error("Square root of a negative number is not allowed");
+          }
+          result = Math.sqrt(num2).toFixed(4);
+          break;
+      }
+      elements.splice(index - 1, 3, parseFloat(result));
+    }
+  });
+
+  return elements[0];
 }
 function isDigit(char) {
   return char >= "0" && char <= "9";
