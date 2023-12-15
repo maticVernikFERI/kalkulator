@@ -1,15 +1,9 @@
 $(document).ready(function () {
-  input = "";
+  input = "0";
   $("td").click(function () {
     vnos = this.innerHTML;
     if (vnos == "Del") {
       input = "";
-      $("#display").html(input);
-    } else if (vnos == "±") {
-      input = (parseFloat(input) * -1).toString();
-      $("#display").html(input);
-    } else if (vnos == "pow") {
-      input += "**";
       $("#display").html(input);
     } else if (vnos == "C") {
       input = input.slice(0, -1);
@@ -23,7 +17,11 @@ $(document).ready(function () {
         $("#display").html(input);
       }
     } else {
-      input += this.innerHTML;
+      if (input === "0" || input === "Error" || input === "NaN") {
+        input = this.innerHTML;
+      } else {
+        input += this.innerHTML;
+      }
       $("#display").html(input);
     }
   });
@@ -37,39 +35,21 @@ function calculate(e) {
     }
   }
   if (count === 0) {
+    console.log(e);
     return e;
   } else if (count === 1) {
+    console.log(e);
     return calculateBracket(e);
   } else {
     e = addPriority(e);
     e = removeBrackets(e);
     let total = calculateBracket(e);
     console.log(total);
-    return total;
+    if (isNaN(total)) {
+      return "Error";
+    }
+    return total.toString();
   }
-}
-function sum(a, b) {
-  a = parseInt(a);
-  b = parseInt(b);
-  return a + b;
-}
-function sub(a, b) {
-  return a - b;
-}
-function mul(a, b) {
-  return a * b;
-}
-function div(a, b) {
-  return a / b;
-}
-function pow(a, b) {
-  return a ** b;
-}
-function sqrt(a) {
-  return Math.sqrt(a);
-}
-function mod(a, b) {
-  return a % b;
 }
 function addPriority(input) {
   let highPriorityOperators = ["×", "÷", "^", "%", "√"];
@@ -126,43 +106,46 @@ function calculateBracket(e) {
   while (i < e.length) {
     let num1 = "",
       num2 = "";
-    while (i < e.length && !isNaN(e[i])) {
+    while (i < e.length && (isDigit(e[i]) || e[i] === ".")) {
       num1 += e[i];
       i++;
     }
     let operator = e[i];
     i++;
-    while (i < e.length && !isNaN(e[i])) {
+    while (i < e.length && (isDigit(e[i]) || e[i] === ".")) {
       num2 += e[i];
       i++;
     }
-    num1 = parseInt(num1);
-    num2 = parseInt(num2);
+    num1 = num1 ? parseFloat(num1) : 0;
+    num2 = num2 ? parseFloat(num2) : 0;
     switch (operator) {
       case "+":
-        total += sum(num1, num2);
+        total += num1 + num2;
         break;
       case "-":
-        total += sub(num1, num2);
+        total += num1 - num2;
         break;
       case "×":
-        total += mul(num1, num2);
+        total += num1 * num2;
         break;
       case "÷":
-        total += div(num1, num2);
+        total += num1 / num2;
         break;
       case "^":
-        total += pow(num1, num2);
+        total += Math.pow(num1, num2);
         break;
       case "%":
-        total += mod(num1, num2);
+        total += num1 % num2;
         break;
       case "√":
-        total += sqrt(num2);
+        total += Math.sqrt(num2);
         break;
     }
   }
   return total;
+}
+function isDigit(char) {
+  return char >= "0" && char <= "9";
 }
 function removeBrackets(e) {
   let bracketPairs = findBracketIndex(e);
