@@ -52,40 +52,16 @@
           <td id="#"></td>
         </tr>
       </table>
-      <div style="height: 300px; display: flex; flex-direction: column">
-        <div>
-          <button onclick="document.getElementById('fileInput').click()">
-            Upload Text File
-          </button>
-          <input
-            type="file"
-            id="fileInput"
-            accept=".txt"
-            style="display: none"
-            onchange="handleFile(this.files)" />
-          <p>Result from files</p>
-        </div>
-        <div id="text-results"></div>
-      </div>
+      <button onclick="document.getElementById('fileInput').click()">
+        Upload Text File
+      </button>
+      <input
+        type="file"
+        id="fileInput"
+        accept=".txt"
+        style="display: none"
+        onchange="handleFile(this.files)" />
+      <div id="text-results"></div>
     </div>
-    <script>
-      function handleFile(files) {
-        var file = files[0];
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          var contents = e.target.result;
-          var lines = contents.split("\n").map(function (line) {
-            return line.replace(/\s/g, "");
-          });
-          console.log(lines);
-          $("#text-results").append(
-            lines.map(function (line) {
-              return "<p>" + line + calculate(line) + "</p>";
-            })
-          );
-        };
-        reader.readAsText(file);
-      }
-    </script>
   </body>
 </html>

@@ -50,47 +50,13 @@ function calculate(e) {
   return total.toString();
 }
 function addPriority(input) {
-  let highPriorityOperators = ["×", "÷", "^", "%", "√"];
-  let lowPriorityOperators = ["+", "-"];
-  let startHighPriority = false;
-  let bracketIndex = -1;
+  let highPriorityOperators = ["×", "÷", "\\^", "%"];
+  let regex = new RegExp(
+    `(\\d+\\.?\\d*\\s*[${highPriorityOperators.join("")}]\\s*\\d+\\.?\\d*)`,
+    "g"
+  );
 
-  for (let i = 0; i < input.length; i++) {
-    if (highPriorityOperators.includes(input[i]) && !startHighPriority) {
-      let j = i - 1;
-      while (
-        j >= 0 &&
-        !isNaN(input[j]) &&
-        input[j] !== "(" &&
-        input[j] !== ")"
-      ) {
-        j--;
-      }
-      input = insertAt(input, j + 1, "(");
-      startHighPriority = true;
-    }
-    if (
-      (lowPriorityOperators.includes(input[i]) || i === input.length - 1) &&
-      startHighPriority
-    ) {
-      let j = i;
-      while (
-        j < input.length &&
-        !isNaN(input[j]) &&
-        input[j] !== "(" &&
-        input[j] !== ")"
-      ) {
-        j++;
-      }
-      input = insertAt(input, j + 1, ")");
-      startHighPriority = false;
-    }
-  }
-  return input;
-}
-
-function insertAt(original, index, string) {
-  return original.slice(0, index) + string + original.slice(index);
+  return input.replace(regex, "($1)");
 }
 function findBracketIndex(e) {
   let stack = [];
@@ -203,4 +169,21 @@ function removeBrackets(e) {
     bracketPairs = findBracketIndex(e);
   }
   return e;
+}
+function handleFile(files) {
+  var file = files[0];
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    var contents = e.target.result;
+    var lines = contents.split("\n").map(function (line) {
+      return line.replace(/\s/g, "");
+    });
+    console.log(lines);
+    $("#text-results").append(
+      lines.map(function (line) {
+        return "<p>" + line + calculate(line) + "</p>";
+      })
+    );
+  };
+  reader.readAsText(file);
 }

@@ -25,6 +25,7 @@ button {
   height: 50px;
   width: 150px;
   cursor: pointer;
+  font-size: 20px;
 }
 #display {
   text-align: end;
@@ -43,4 +44,7 @@ body {
 #links {
   display: flex;
   gap: 1rem;
+}
+p {
+  font-size: 20px;
 }
