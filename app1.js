@@ -18,6 +18,7 @@ $(document).ready(function () {
       try {
         input = calculate(input);
         $("#display").html(input);
+        input = input.toString();
         calculationPerformed = true;
       } catch (err) {
         input = "Error";
@@ -39,46 +40,33 @@ $(document).ready(function () {
   });
 });
 function calculate(e) {
-  let count = 0;
-  let operators = ["+", "-", "×", "÷", "^", "%", "√"];
-  for (let i = 0; i < e.length; i++) {
-    if (operators.includes(e[i])) {
-      count++;
-    }
+  e = addPriority(e);
+  e = removeBrackets(e);
+  let total = calculateBracket(e);
+  console.log(total);
+  if (isNaN(total)) {
+    return "Error";
   }
-  if (count === 0) {
-    console.log(e);
-    return e;
-  } else if (count === 1) {
-    console.log(e);
-    return calculateBracket(e);
-  } else {
-    e = addPriority(e);
-    e = removeBrackets(e);
-    let total = calculateBracket(e);
-    console.log(total);
-    if (isNaN(total)) {
-      return "Error";
-    }
-    return total.toString();
-  }
+  return total.toString();
 }
 function addPriority(input) {
   let highPriorityOperators = ["×", "÷", "^", "%", "√"];
   let lowPriorityOperators = ["+", "-"];
   let startHighPriority = false;
   let bracketIndex = -1;
+
   for (let i = 0; i < input.length; i++) {
     if (highPriorityOperators.includes(input[i]) && !startHighPriority) {
       let j = i - 1;
-      while (j >= 0 && !isNaN(input[j])) {
+      while (
+        j >= 0 &&
+        !isNaN(input[j]) &&
+        input[j] !== "(" &&
+        input[j] !== ")"
+      ) {
         j--;
       }
-      if (j < 0) {
-        break;
-      }
       input = insertAt(input, j + 1, "(");
-      bracketIndex = j + 1;
       startHighPriority = true;
     }
     if (
@@ -86,34 +74,38 @@ function addPriority(input) {
       startHighPriority
     ) {
       let j = i;
-      while (j < input.length && !isNaN(input[j])) {
+      while (
+        j < input.length &&
+        !isNaN(input[j]) &&
+        input[j] !== "(" &&
+        input[j] !== ")"
+      ) {
         j++;
       }
-      input = insertAt(input, j, ")");
+      input = insertAt(input, j + 1, ")");
       startHighPriority = false;
     }
   }
   return input;
 }
-function insertAt(string, index, substring) {
-  return string.slice(0, index) + substring + string.slice(index);
+
+function insertAt(original, index, string) {
+  return original.slice(0, index) + string + original.slice(index);
 }
 function findBracketIndex(e) {
-  let openBracketLocations = [];
-  let closeBracketLocations = [];
+  let stack = [];
+  let bracketPairs = [];
   for (let i = 0; i < e.length; i++) {
     if (e[i] == "(") {
-      openBracketLocations.push(i);
-    }
-    if (e[i] == ")") {
-      closeBracketLocations.push(i);
+      stack.push(i);
+    } else if (e[i] == ")") {
+      if (stack.length) {
+        let start = stack.pop();
+        bracketPairs.push([start, i]);
+      }
     }
   }
-  let bracketPairs = [];
-  for (let i = 0; i < openBracketLocations.length; i++) {
-    bracketPairs.push([openBracketLocations[i], closeBracketLocations[i]]);
-  }
-  return bracketPairs;
+  return bracketPairs.sort((a, b) => a[0] - b[0]);
 }
 function calculateBracket(e) {
   let elements = [];
@@ -201,12 +193,14 @@ function isDigit(char) {
 }
 function removeBrackets(e) {
   let bracketPairs = findBracketIndex(e);
-  for (let i = bracketPairs.length - 1; i >= 0; i--) {
-    let start = bracketPairs[i][0];
-    let end = bracketPairs[i][1];
+  while (bracketPairs.length > 0) {
+    let innermostPair = bracketPairs[bracketPairs.length - 1];
+    let start = innermostPair[0];
+    let end = innermostPair[1];
     let substring = e.substring(start + 1, end);
     let result = calculateBracket(substring);
     e = e.substring(0, start) + result + e.substring(end + 1);
+    bracketPairs = findBracketIndex(e);
   }
   return e;
 }

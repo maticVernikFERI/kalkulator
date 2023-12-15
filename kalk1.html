@@ -9,11 +9,10 @@
     <script src="app1.js"></script>
   </head>
   <body>
-  <body>
     <div id="#links">
-    <a href="kalk1.html"><button>Kalkulator 1</button></a>
-    <a href="kalk2.html"><button>Kalkulator 2</button></a>
-    <a href="kalk3.html"><button>Kalkulator 3</button></a>
+      <a href="kalk1.html"><button>Kalkulator 1</button></a>
+      <a href="kalk2.html"><button>Kalkulator 2</button></a>
+      <a href="kalk3.html"><button>Kalkulator 3</button></a>
     </div>
     <div class="container">
       <table class="table">
@@ -21,31 +20,31 @@
           <th colspan="6" id="display">0</th>
         </tr>
         <tr>
-          <td class ="num id="7">7</td>
-          <td class ="num id="8">8</td>
-          <td class ="num  id="9">9</td>
+          <td id="7">7</td>
+          <td id="8">8</td>
+          <td id="9">9</td>
           <td id="%">%</td>
           <td id="÷">÷</td>
           <td id="del">Del</td>
         </tr>
         <tr>
-          <td class ="num  id="4">4</td>
-          <td class ="num  id="5">5</td>
-          <td class ="num  id="6">6</td>
+          <td id="4">4</td>
+          <td id="5">5</td>
+          <td id="6">6</td>
           <td id="^">^</td>
           <td id="×">×</td>
           <td id="C">C</td>
         </tr>
         <tr>
-          <td class ="num  id="1">1</td>
-          <td class ="num  id="2">2</td>
-          <td class ="num  id="3">3</td>
+          <td id="1">1</td>
+          <td id="2">2</td>
+          <td id="3">3</td>
           <td id="√ ">√</td>
           <td id="+">+</td>
           <td id="=">=</td>
         </tr>
         <tr>
-          <td class ="num  id="0">0</td>
+          <td id="0">0</td>
           <td id=".">.</td>
           <td id="(">(</td>
           <td id=")">)</td>
@@ -53,7 +52,40 @@
           <td id="#"></td>
         </tr>
       </table>
+      <div style="height: 300px; display: flex; flex-direction: column">
+        <div>
+          <button onclick="document.getElementById('fileInput').click()">
+            Upload Text File
+          </button>
+          <input
+            type="file"
+            id="fileInput"
+            accept=".txt"
+            style="display: none"
+            onchange="handleFile(this.files)" />
+          <p>Result from files</p>
+        </div>
+        <div id="text-results"></div>
+      </div>
     </div>
-    <script></script>
+    <script>
+      function handleFile(files) {
+        var file = files[0];
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var contents = e.target.result;
+          var lines = contents.split("\n").map(function (line) {
+            return line.replace(/\s/g, "");
+          });
+          console.log(lines);
+          $("#text-results").append(
+            lines.map(function (line) {
+              return "<p>" + line + calculate(line) + "</p>";
+            })
+          );
+        };
+        reader.readAsText(file);
+      }
+    </script>
   </body>
 </html>
