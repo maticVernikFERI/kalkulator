@@ -17,11 +17,10 @@ $(document).ready(function () {
             input += vnos.toLowerCase().charAt(0);
         } else if (vnos == '=') {
             result = checkInput(input);
-            if (result == 0) {
+            if (result == -1) {
                 window.alert('Narobe napisana enačba');
             } else {
                 input += '=' + result;
-                console.log('ok');
             }
         } else {
             input += vnos;
@@ -32,7 +31,7 @@ $(document).ready(function () {
 });
 
 function checkInput(input) {
-    let result = 0;
+    let result = -1;
     let forCalc = input.substr(1, input.length - 2);
     if (/^([b][0-1]+[doh])$/.test(input)) {
         switch (input.charAt(input.length - 1)) {
@@ -90,7 +89,6 @@ function checkInput(input) {
 function bTd(input) {
     let digits = input.split('');
     let result = 0;
-    console.log(digits);
     digits.forEach(function (currentValue, index) {
         result += currentValue * (Math.pow(2, (digits.length - (index + 1))))
     });
@@ -100,15 +98,14 @@ function bTh(input) {
     let digits = input.split('');
     let result = '';
 
-    for (let i = digits.length; i > 0; i-=4) {
+    for (let i = digits.length; i > 0; i -= 4) {
         let fourDigits;
-        if(i < 4){
+        if (i < 4) {
             fourDigits = digits.slice(0, i);
-        }else{
-            fourDigits = digits.slice(i-4, i);
+        } else {
+            fourDigits = digits.slice(i - 4, i);
         }
-        
-        //console.log(fourDigits);
+
         let hexResult = 0;
 
         fourDigits.forEach(function (currentValue, index) {
@@ -130,15 +127,14 @@ function bTo(input) {
     let digits = input.split('');
     let result = '';
 
-    for (let i = digits.length; i > 0; i-=3) {
+    for (let i = digits.length; i > 0; i -= 3) {
         let fourDigits;
-        if(i < 4){
+        if (i < 4) {
             fourDigits = digits.slice(0, i);
-        }else{
-            fourDigits = digits.slice(i-3, i);
+        } else {
+            fourDigits = digits.slice(i - 3, i);
         }
-        
-        //console.log(fourDigits);
+
         let hexResult = 0;
 
         fourDigits.forEach(function (currentValue, index) {
@@ -149,9 +145,53 @@ function bTo(input) {
     };
     return result;
 }
-function dTb(input) { }
-function dTh(input) { }
-function dTo(input) { }
+function dTb(input) {
+    let result = '';
+
+    if (input == 0) {
+        result = '0';
+    }
+
+    while (input > 0) {
+        result = (input % 2) + '' + result;
+        input = ~~(input / 2);
+    }
+
+    return result;
+}
+function dTh(input) {
+    let result = ''; 
+    
+    if (input == 0) {
+        result = '0';
+    }
+
+    while (input > 0) {
+        let hexResult = input % 16;
+        if (hexResult > 9) {
+            let toIncrement = hexResult % 10;
+            hexResult = 'A';
+            hexResult = String.fromCharCode(hexResult.charCodeAt(0) + toIncrement);
+        }
+        result = hexResult + '' + result;
+        input = ~~(input / 16);
+    }
+    return result;
+}
+function dTo(input) { 
+    let result = '';
+
+    if (input == 0) {
+        result = '0';
+    }
+
+    while (input > 0) {
+        result = (input % 8) + '' + result;
+        input = ~~(input / 8);
+    }
+
+    return result;
+}
 function hTb(input) { }
 function hTd(input) { }
 function hTo(input) { }
