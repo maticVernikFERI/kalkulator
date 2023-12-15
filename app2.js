@@ -4,13 +4,14 @@ $(document).ready(function () {
     $("td").click(function () {
         let vnos = this.innerHTML; //Trenutni vnos
 
-        if (/^([bdoh][0-9A-Z]+[bdoh]=[0-9A-Z])$/.test(input)){
+        //Preveri če je izpisan trenutno že izračun končni
+        if (/^([bdoh][0-9A-Z]+[bdoh]=[0-9A-Z]+)$/.test(input)) {
             input = '';
         }
 
         if (this.id == 'clear') {
             input = '';
-        } else if (this.id == 'del') {
+        } else if (vnos == 'Del') {
             input = input.slice(0, -1);
         } else if (vnos == 'BIN' || vnos == 'DEC' || vnos == 'HEX' || vnos == 'OCT') {
             input += vnos.toLowerCase().charAt(0);
@@ -88,12 +89,66 @@ function checkInput(input) {
 
 function bTd(input) {
     let digits = input.split('');
+    let result = 0;
     console.log(digits);
-
-    return 1;
+    digits.forEach(function (currentValue, index) {
+        result += currentValue * (Math.pow(2, (digits.length - (index + 1))))
+    });
+    return result;
 }
-function bTh(input) { }
-function bTo(input) { }
+function bTh(input) {
+    let digits = input.split('');
+    let result = '';
+
+    for (let i = digits.length; i > 0; i-=4) {
+        let fourDigits;
+        if(i < 4){
+            fourDigits = digits.slice(0, i);
+        }else{
+            fourDigits = digits.slice(i-4, i);
+        }
+        
+        //console.log(fourDigits);
+        let hexResult = 0;
+
+        fourDigits.forEach(function (currentValue, index) {
+            hexResult += currentValue * (Math.pow(2, (fourDigits.length - (index + 1))))
+        });
+
+        //Spremeni števke nad 9 v črke
+        if (hexResult > 9) {
+            let toIncrement = hexResult % 10;
+            hexResult = 'A';
+            hexResult = String.fromCharCode(hexResult.charCodeAt(0) + toIncrement);
+        }
+
+        result = hexResult + '' + result;
+    };
+    return result;
+}
+function bTo(input) {
+    let digits = input.split('');
+    let result = '';
+
+    for (let i = digits.length; i > 0; i-=3) {
+        let fourDigits;
+        if(i < 4){
+            fourDigits = digits.slice(0, i);
+        }else{
+            fourDigits = digits.slice(i-3, i);
+        }
+        
+        //console.log(fourDigits);
+        let hexResult = 0;
+
+        fourDigits.forEach(function (currentValue, index) {
+            hexResult += currentValue * (Math.pow(2, (fourDigits.length - (index + 1))))
+        });
+
+        result = hexResult + '' + result;
+    };
+    return result;
+}
 function dTb(input) { }
 function dTh(input) { }
 function dTo(input) { }
