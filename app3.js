@@ -1,10 +1,9 @@
-let savedVareables = [];
+let savedVariables = [];
 let input = '';
 let toCalk = '';
 let result = 0;
 
 $(document).ready(function () {
-
     $("td[id!='display']").click(newInput);
 });
 
@@ -13,7 +12,7 @@ function newInput() {
 
     if (vnos == 'new') {
         if (/^[01]+$/.test($("#display").html())) {
-            newVareable();
+            newVariable();
             input = '';
         } else {
             window.alert("Error");
@@ -24,7 +23,7 @@ function newInput() {
         input = '';
         toCalk = '';
         $(".var").remove();
-        savedVareables = [];
+        savedVariables = [];
     } else if (vnos == '=') {
         correctEq = checkInput();
         if (!correctEq) {
@@ -43,7 +42,7 @@ function newInput() {
 function makeToCalk() {
     for (const char of input) {
         if (/^[A-Z]$/.test(char)) {
-            toCalk += savedVareables[char.charCodeAt(0) - 65];
+            toCalk += savedVariables[char.charCodeAt(0) - 65];
         } else {
             toCalk += char;
         }
@@ -91,13 +90,18 @@ function and(equasion) {
     let dig2 = equasion[0].substr(poz + 1, equasion[0].length);
     let result = '';
 
-    if(dig1.length > dig2.length) {
-        for (let i = 0; i < dig1.length - dig2.length; i++){
-            dig2 = '0' + dig2;
-        }
-    }else if(dig1.length < dig2.length){
-        for (let i = 0; i < dig2.length - dig1.length; i++){
-            dig1 = '0' + dig1;
+    while(dig1.length > dig2.length) {
+        dig2 = '0' + dig2; 
+    }
+    while(dig1.length < dig2.length){
+        dig1 = '0' + dig1; 
+    }
+
+    for(let i = 0; i <dig1.length; i++) {
+        if(dig1.charAt(i) == '1' && dig2.charAt(i) == '1'){
+            result += '1';
+        }else{
+            result += '0';
         }
     }
 
@@ -127,13 +131,13 @@ function checkInput() {
     return true;
 }
 
-function addVareable() {
+function addVariable() {
     input += $(this).text();
     display(input);
 }
 
-function newVareable() {
-    let name = String.fromCharCode(65 + savedVareables.length);
+function newVariable() {
+    let name = String.fromCharCode(65 + savedVariables.length);
     let cell = document.createElement("td");
     let input = $("#display").html();
     let digits = '';
@@ -141,10 +145,10 @@ function newVareable() {
         digits += char;
     }
     $(cell).attr('id', name);
-    savedVareables.push(digits);
+    savedVariables.push(digits);
 
-    $(cell).html(name).click(addVareable).addClass('var');
-    $("#vareables").append(cell);
+    $(cell).html(name).click(addVariable).addClass('var');
+    $("#variables").append(cell);
 }
 
 function display(input) {
