@@ -7,6 +7,25 @@
     <link rel="stylesheet" href="style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="app2.js"></script>
+    <style>
+      td {
+        pointer-events: none;
+        background-color: rgb(187, 187, 187);
+      }
+      .active {
+        background-color: #f4f4f4;
+        pointer-events: auto;
+      }
+      .current {
+        background-color: lightgreen;
+      }
+      .active:hover {
+        background-color: #e6e6e6;
+      }
+      .current:hover {
+        background-color: rgb(134, 223, 134);
+      }
+    </style>
   </head>
 
   <body>
@@ -19,13 +38,13 @@
     <div class="container">
       <table class="table">
         <tr>
-          <td colspan="6" id="display"></td>
+          <th colspan="6" id="display"></th>
         </tr>
         <tr>
-          <td id="c">C</td>
-          <td id="d">D</td>
-          <td id="e">E</td>
-          <td id="f">F</td>
+          <td id="C">C</td>
+          <td id="D">D</td>
+          <td id="E">E</td>
+          <td id="F">F</td>
 
           <td id="bin">BIN</td>
           <td id="dec">DEC</td>
@@ -33,8 +52,8 @@
         <tr>
           <td id="8">8</td>
           <td id="9">9</td>
-          <td id="a">A</td>
-          <td id="b">B</td>
+          <td id="A">A</td>
+          <td id="B">B</td>
 
           <td id="hex">HEX</td>
           <td id="oct">OCT</td>
@@ -44,15 +63,15 @@
           <td id="5">5</td>
           <td id="6">6</td>
           <td id="7">7</td>
-          <td id="del">Del</td>
           <td id="clear">C</td>
+          <td id="equal">=</td>
         </tr>
         <tr>
           <td id="0">0</td>
           <td id="1">1</td>
           <td id="2">2</td>
           <td id="3">3</td>
-          <td id="=">=</td>
+          <td id="#"></td>
           <td id="#"></td>
         </tr>
       </table>
