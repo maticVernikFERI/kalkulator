@@ -192,12 +192,97 @@ function dTo(input) {
 
     return result;
 }
-function hTb(input) { }
-function hTd(input) { }
-function hTo(input) { }
-function oTb(input) { }
-function oTd(input) { }
-function oTh(input) { }
+function hTb(input) { 
+    let result = '';
+    for (const char of input) {
+        switch(char) {
+            case '0': result += "0000"; break;
+            case '1': result += "0001"; break;
+            case '2': result += "0010"; break;
+            case '3': result += "0011"; break;
+            case '4': result += "0100"; break;
+            case '5': result += "0101"; break;
+            case '6': result += "0110"; break;
+            case '7': result += "0111"; break;
+            case '8': result += "1000"; break;
+            case '9': result += "1001"; break;
+            case 'A': result += "1010"; break;
+            case 'B': result += "1011"; break;
+            case 'C': result += "1100"; break;
+            case 'D': result += "1101"; break;
+            case 'E': result += "1110"; break;
+            case 'F': result += "1111"; break;
+        }
+        
+    }
+    return result;
+}
+function hTd(input) { 
+    let result = 0;
+    for (let i = 0; i < input.length; i++) {
+        hexDigit = input.charAt(i);
+        if (/^[A-F]$/.test(hexDigit)){
+            hexDigit = (hexDigit.charCodeAt(0) - 65) + 10;
+        }
+        result += hexDigit * Math.pow(16,(input.length -(i + 1)));
+    }
+
+    return result;
+}
+function hTo(input) { 
+    let result = '';
+    for (const char of input) {
+        switch(char) {
+            case '0': result += "0"; break;
+            case '1': result += "1"; break;
+            case '2': result += "2"; break;
+            case '3': result += "3"; break;
+            case '4': result += "4"; break;
+            case '5': result += "5"; break;
+            case '6': result += "6"; break;
+            case '7': result += "7"; break;
+            case '8': result += "10"; break;
+            case '9': result += "11"; break;
+            case 'A': result += "12"; break;
+            case 'B': result += "13"; break;
+            case 'C': result += "14"; break;
+            case 'D': result += "15"; break;
+            case 'E': result += "16"; break;
+            case 'F': result += "17"; break;
+        }
+        
+    }
+    return result;
+}
+function oTb(input) { 
+    let result = '';
+    for (const char of input) {
+        switch(char) {
+            case '0': result += "000"; break;
+            case '1': result += "001"; break;
+            case '2': result += "010"; break;
+            case '3': result += "011"; break;
+            case '4': result += "100"; break;
+            case '5': result += "101"; break;
+            case '6': result += "110"; break;
+            case '7': result += "111"; break;
+        }
+        
+    }
+    return result;
+}
+function oTd(input) { 
+    let result = 0;
+    for (let i = 0; i < input.length; i++) {
+        octDigit = input.charAt(i);
+        result += octDigit * Math.pow(8,(input.length -(i + 1)));
+    }
+
+    return result;
+}
+function oTh(input) { 
+    return bTh(oTb(input));
+}
 
 
 function display(input) {
