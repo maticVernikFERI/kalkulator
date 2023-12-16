@@ -1,17 +1,17 @@
 let savedVareables = [];
 let input = '';
+let toCalk = '';
 let result = 0;
 
 $(document).ready(function () {
 
-    $("td").click(newInput);
+    $("td[id!='display']").click(newInput);
 });
 
 function newInput() {
     let vnos = this.id; //Trenutni vnos
 
     if (vnos == 'new') {
-        console.log($("#display").html());
         if (/^[01]+$/.test($("#display").html())) {
             newVareable();
             input = '';
@@ -22,16 +22,114 @@ function newInput() {
         input = input.slice(0, -1);
     } else if (this.id == 'clear') {
         input = '';
+        toCalk = '';
+        $(".var").remove();
         savedVareables = [];
+    } else if (vnos == '=') {
+        correctEq = checkInput();
+        if (!correctEq) {
+            window.alert('Narobe napisana enačba');
+        } else {
+            makeToCalk();
+            result = calculate(toCalk);
+            input += '=' + result;
+        }
     } else {
         input += vnos;
     }
     display(input);
 }
 
+function makeToCalk() {
+    for (const char of input) {
+        if (/^[A-Z]$/.test(char)) {
+            toCalk += savedVareables[char.charCodeAt(0) - 65];
+        } else {
+            toCalk += char;
+        }
+    }
+}
+
+function calculate(equasion) {
+    if (equasion.includes('(')) {
+        let start = equasion.indexOf('(');
+        let end = 0;
+        let count = 0;
+        for (let i = start; i < equasion.length; i++) {
+            if (equasion.charAt(i) == '(') {
+                count++;
+            } else if (equasion.charAt(i) == ')') {
+                count--;
+            }
+
+            if (equasion.charAt(i) == ')' && count == 0) {
+                end = i;
+                break;
+            }
+        }
+        console.log(equasion.substring(start + 1, end));
+        equasion = equasion.replace(equasion.substring(start, end + 1), calculate(equasion.substring(start + 1, end)));
+    }
+
+    if (equasion.includes('n')) {
+        equasion = equasion.replace(/n[01]+/, not(equasion.match(/n[01]+/)));
+    }
+
+    for (const x of equasion) {
+        if (x == 'a') {
+            console.log('and');
+            equasion = equasion.replace(/[01]+a[01]+/, and(equasion.match(/[01]+a[01]+/)));
+        }
+    }
+
+    return equasion;
+}
+
+function and(equasion) {
+    let poz = equasion[0].indexOf('a');
+    let dig1 = equasion[0].substr(0, poz);
+    let dig2 = equasion[0].substr(poz + 1, equasion[0].length);
+    let result = '';
+
+    if(dig1.length > dig2.length) {
+        for (let i = 0; i < dig1.length - dig2.length; i++){
+            dig2 = '0' + dig2;
+        }
+    }else if(dig1.length < dig2.length){
+        for (let i = 0; i < dig2.length - dig1.length; i++){
+            dig1 = '0' + dig1;
+        }
+    }
+
+    console.log(dig1 + ' ' + dig2);
+
+    return result;
+}
+
+function not(equasion) {
+    let digits = equasion[0].substring(1);
+    let result = '';
+    for (const digit of digits) {
+        if (digit == '1') {
+            result += '0';
+        } else {
+            result += '1';
+        }
+    }
+    return result;
+}
+
+//!Dodaj preverjanje izraza
+function checkInput() {
+    if (/^[01]+$/.test(input)) {
+    }
+
+    return true;
+}
+
 function addVareable() {
-    let index = $(this).attr('id').substring(1);
-    console.log(savedVareables[index]);
+    input += $(this).text();
+    display(input);
 }
 
 function newVareable() {
@@ -42,10 +140,10 @@ function newVareable() {
     for (const char of input) {
         digits += char;
     }
-    $(cell).attr('id', ('v' + savedVareables.length));
+    $(cell).attr('id', name);
     savedVareables.push(digits);
 
-    $(cell).html(name).click(addVareable);
+    $(cell).html(name).click(addVareable).addClass('var');
     $("#vareables").append(cell);
 }
 
@@ -78,7 +176,7 @@ function display(input) {
                 output += '= ';
                 break;
             default:
-                if(/^[01]$/.test(char)){
+                if (/^[01]$/.test(char)) {
 
                 }
                 output += char;
