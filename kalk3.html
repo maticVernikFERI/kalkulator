@@ -1,52 +1,59 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kalkulator</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="app3.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kalkulator</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="app3.js"></script>
-</head>
-
-<body>
-  <div id="#links">
-    <a href="kalk1.html"><button>Kalkulator 1</button></a>
-    <a href="kalk2.html"><button>Kalkulator 2</button></a>
-    <a href="kalk3.html"><button>Kalkulator 3</button></a>
-  </div>
-  <div class="container">
-    <table class="table">
-      <tr>
-        <td colspan="4" id="display"></td>
-        <td id="del">Del</td>
-        <td id="clear">C</td>
-      </tr>
-      <tr>
-        <td id="0">0</td>
-        <td id="1">1</td>
-        <td id="(">(</td>
-        <td id=")">)</td>
-        <td id="n">NEG</td>
-        <td id="=">=</td>
-      </tr>
-      <tr>
-        <td id="a">AND</td>
-        <td id="o">OR</td>
-        <td id="e">NAND</td>
-        <td id="u">NOR</td>
-        <td id="x">XOR</td>
-        <td id="z">XNOR</td>
-      </tr>
-      <tr id="variables">
-        <td id="new">New</td>
-      </tr>
-    </table>
-  </div>
-
-
-  
-</body>
-
+  <body>
+    <div id="#links">
+      <a href="kalk1.html"><button>Kalkulator 1</button></a>
+      <a href="kalk2.html"><button>Kalkulator 2</button></a>
+      <a href="kalk3.html"><button>Kalkulator 3</button></a>
+    </div>
+    <div class="container">
+      <table class="table">
+        <tr>
+          <td colspan="5" id="display"></td>
+          <td id="clear">C</td>
+        </tr>
+        <tr>
+          <td id="0">0</td>
+          <td id="1">1</td>
+          <td id="(">(</td>
+          <td id=")">)</td>
+          <td id="n">NEG</td>
+          <td id="=">=</td>
+        </tr>
+        <tr>
+          <td id="a">AND</td>
+          <td id="o">OR</td>
+          <td id="e">NAND</td>
+          <td id="u">NOR</td>
+          <td id="x">XOR</td>
+          <td id="z">XNOR</td>
+        </tr>
+        <tr id="variables">
+          <td id="new">New</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td id="del">Del</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  </body>
 </html>

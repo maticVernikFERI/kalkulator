@@ -12,9 +12,8 @@ th {
   border: 1px solid black;
   width: 100px;
   text-align: center;
-  font-size: 50px;
+  font-size: 30px;
   cursor: pointer;
-  font-size: 40px;
 }
 td:hover {
   background-color: #e6e6e6;
