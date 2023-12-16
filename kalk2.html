@@ -1,65 +1,71 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kalkulator</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="app2.js"></script>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kalkulator</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="app2.js"></script>
+  </head>
 
-<body>
-  <div id="#links">
-    <a href="kalk1.html"><button>Kalkulator 1</button></a>
-    <a href="kalk2.html"><button>Kalkulator 2</button></a>
-    <a href="kalk3.html"><button>Kalkulator 3</button></a>
-  </div>
+  <body>
+    <div id="#links">
+      <a href="kalk1.html"><button>Kalkulator 1</button></a>
+      <a href="kalk2.html"><button>Kalkulator 2</button></a>
+      <a href="kalk3.html"><button>Kalkulator 3</button></a>
+    </div>
 
-  <div class="container">
-    <table class="table">
-      <tr>
-        <td colspan="4" id="display"></td>
-        <td id="del">Del</td>
-        <td id="clear">C</td>
-      </tr>
-      <tr>
-        <td id="c">C</td>
-        <td id="d">D</td>
-        <td id="e">E</td>
-        <td id="f">F</td>
+    <div class="container">
+      <table class="table">
+        <tr>
+          <td colspan="4" id="display"></td>
+          <td id="del">Del</td>
+          <td id="clear">C</td>
+        </tr>
+        <tr>
+          <td id="c">C</td>
+          <td id="d">D</td>
+          <td id="e">E</td>
+          <td id="f">F</td>
 
-        <td id="bin">BIN</td>
-        <td id="dec">DEC</td>
-      </tr>
-      <tr>
-        <td id="8">8</td>
-        <td id="9">9</td>
-        <td id="a">A</td>
-        <td id="b">B</td>
+          <td id="bin">BIN</td>
+          <td id="dec">DEC</td>
+        </tr>
+        <tr>
+          <td id="8">8</td>
+          <td id="9">9</td>
+          <td id="a">A</td>
+          <td id="b">B</td>
 
-        <td id="hex">HEX</td>
-        <td id="oct">OCT</td>
-      </tr>
-      <tr>
-        <td id="4">4</td>
-        <td id="5">5</td>
-        <td id="6">6</td>
-        <td id="7">7</td>
-        <td id="=">=</td>
-      </tr>
-      <tr>
-        <td id="0">0</td>
-        <td id="1">1</td>
-        <td id="2">2</td>
-        <td id="3">3</td>
-      </tr>
-      <tr>
-
-
-      </tr>
-    </table>
-  </div>
-</body>
-
+          <td id="hex">HEX</td>
+          <td id="oct">OCT</td>
+        </tr>
+        <tr>
+          <td id="4">4</td>
+          <td id="5">5</td>
+          <td id="6">6</td>
+          <td id="7">7</td>
+          <td id="=">=</td>
+        </tr>
+        <tr>
+          <td id="0">0</td>
+          <td id="1">1</td>
+          <td id="2">2</td>
+          <td id="3">3</td>
+        </tr>
+        <tr></tr>
+      </table>
+      <button onclick="document.getElementById('fileInput').click()">
+        Upload Text File
+      </button>
+      <input
+        type="file"
+        id="fileInput"
+        accept=".txt"
+        style="display: none"
+        onchange="handleFile(this.files)" />
+      <div id="text-results"></div>
+    </div>
+  </body>
 </html>
