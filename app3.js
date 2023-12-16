@@ -29,6 +29,7 @@ function newInput() {
         if (!correctEq) {
             window.alert('Narobe napisana enačba');
         } else {
+            toCalk = '';
             makeToCalk();
             result = calculate(toCalk);
             input += '=' + result;
@@ -80,9 +81,121 @@ function calculate(equation) {
         if (x == 'o') {
             equation = equation.replace(/[01]+o[01]+/, or(equation.match(/[01]+o[01]+/)));
         }
+        if (x == 'e') {
+            equation = equation.replace(/[01]+e[01]+/, nand(equation.match(/[01]+e[01]+/)));
+        }
+        if (x == 'u') {
+            equation = equation.replace(/[01]+u[01]+/, nor(equation.match(/[01]+u[01]+/)));
+        }
+        if (x == 'x') {
+            equation = equation.replace(/[01]+x[01]+/, xor(equation.match(/[01]+x[01]+/)));
+        }
+        if (x == 'z') {
+            equation = equation.replace(/[01]+z[01]+/, xnor(equation.match(/[01]+z[01]+/)));
+        }
     }
 
     return equation;
+}
+
+function xnor(equation) {
+    let poz = equation[0].indexOf('z');
+    let dig1 = equation[0].substr(0, poz);
+    let dig2 = equation[0].substr(poz + 1, equation[0].length);
+    let result = '';
+
+    while (dig1.length > dig2.length) {
+        dig2 = '0' + dig2;
+    }
+    while (dig1.length < dig2.length) {
+        dig1 = '0' + dig1;
+    }
+
+    for (let i = 0; i < dig1.length; i++) {
+        if (dig1.charAt(i) + dig2.charAt(i) % 2 == 0) {
+            result += '1';
+        } else {
+            result += '0';
+        }
+    }
+
+    return result;
+}
+
+function xor(equation) {
+    let poz = equation[0].indexOf('x');
+    let dig1 = equation[0].substr(0, poz);
+    let dig2 = equation[0].substr(poz + 1, equation[0].length);
+    let result = '';
+
+    while (dig1.length > dig2.length) {
+        dig2 = '0' + dig2;
+    }
+    while (dig1.length < dig2.length) {
+        dig1 = '0' + dig1;
+    }
+
+    console.log(dig1 + ' ' + dig2);
+
+    for (let i = 0; i < dig1.length; i++) {
+        let x = parseInt(dig1.charAt(i)) + parseInt(dig2.charAt(i));
+        console.log(x);
+        if (x % 2 == 0) {
+            result += '0';
+        } else {
+            result += '1';
+        }
+    }
+
+    return result;
+}
+
+function nor(equation) {
+    let poz = equation[0].indexOf('u');
+    let dig1 = equation[0].substr(0, poz);
+    let dig2 = equation[0].substr(poz + 1, equation[0].length);
+    let result = '';
+
+    while (dig1.length > dig2.length) {
+        dig2 = '0' + dig2;
+    }
+    while (dig1.length < dig2.length) {
+        dig1 = '0' + dig1;
+    }
+
+    for (let i = 0; i < dig1.length; i++) {
+        if (dig1.charAt(i) == '1' || dig2.charAt(i) == '1') {
+            result += '0';
+        } else {
+            result += '1';
+        }
+    }
+
+    return result;
+}
+
+function nand(equation) {
+    let poz = equation[0].indexOf('e');
+    let dig1 = equation[0].substr(0, poz);
+    let dig2 = equation[0].substr(poz + 1, equation[0].length);
+    let result = '';
+
+    while (dig1.length > dig2.length) {
+        dig2 = '0' + dig2;
+    }
+    while (dig1.length < dig2.length) {
+        dig1 = '0' + dig1;
+    }
+
+    for (let i = 0; i < dig1.length; i++) {
+        if (dig1.charAt(i) == '1' && dig2.charAt(i) == '1') {
+            result += '0';
+        } else {
+            result += '1';
+        }
+    }
+
+    return result;
 }
 
 function or(equation) {
@@ -200,7 +313,7 @@ function display(input) {
                 output += ' XNOR ';
                 break;
             case '=':
-                output += '= ';
+                output += ' = ';
                 break;
             default:
                 if (/^[01]$/.test(char)) {
