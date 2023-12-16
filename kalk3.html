@@ -7,6 +7,19 @@
     <link rel="stylesheet" href="style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="app3.js"></script>
+    <style>
+      td {
+        pointer-events: none;
+        background-color: rgb(187, 187, 187);
+      }
+      .active {
+        background-color: #f4f4f4;
+        pointer-events: auto;
+      }
+      .active:hover {
+        background-color: #e6e6e6;
+      }
+    </style>
   </head>
 
   <body>
@@ -18,7 +31,7 @@
     <div class="container">
       <table class="table">
         <tr>
-          <td colspan="5" id="display"></td>
+          <th colspan="5" id="display"></th>
           <td id="clear">C</td>
         </tr>
         <tr>
@@ -39,19 +52,19 @@
         </tr>
         <tr id="variables">
           <td id="new">New</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td id="s1"></td>
+          <td id="s1"></td>
+          <td id="s1"></td>
+          <td id="s1"></td>
+          <td id="s1"></td>
         </tr>
         <tr>
           <td id="del">Del</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td id="s1"></td>
+          <td id="s1"></td>
+          <td id="s1"></td>
+          <td id="s1"></td>
+          <td id="s1"></td>
         </tr>
       </table>
     </div>
