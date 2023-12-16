@@ -265,60 +265,26 @@ function hTd(input) {
   return result;
 }
 function hTo(input) {
-  let result = "";
-  for (const char of input) {
-    switch (char) {
-      case "0":
-        result += "0";
-        break;
-      case "1":
-        result += "1";
-        break;
-      case "2":
-        result += "2";
-        break;
-      case "3":
-        result += "3";
-        break;
-      case "4":
-        result += "4";
-        break;
-      case "5":
-        result += "5";
-        break;
-      case "6":
-        result += "6";
-        break;
-      case "7":
-        result += "7";
-        break;
-      case "8":
-        result += "10";
-        break;
-      case "9":
-        result += "11";
-        break;
-      case "A":
-        result += "12";
-        break;
-      case "B":
-        result += "13";
-        break;
-      case "C":
-        result += "14";
-        break;
-      case "D":
-        result += "15";
-        break;
-      case "E":
-        result += "16";
-        break;
-      case "F":
-        result += "17";
-        break;
+  // Convert hexadecimal to decimal
+  let decimal = 0;
+  for (let i = 0; i < input.length; i++) {
+    let digitValue;
+    if (input[i] >= "0" && input[i] <= "9") {
+      digitValue = input[i] - "0";
+    } else if (input[i] >= "A" && input[i] <= "F") {
+      digitValue = 10 + (input[i].charCodeAt(0) - "A".charCodeAt(0));
     }
+    decimal = decimal * 16 + digitValue;
   }
-  return result;
+
+  // Convert decimal to octal
+  let octal = "";
+  while (decimal > 0) {
+    octal = (decimal % 8).toString() + octal;
+    decimal = Math.floor(decimal / 8);
+  }
+
+  return octal;
 }
 function oTb(input) {
   let result = "";
