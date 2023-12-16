@@ -11,8 +11,6 @@ $(document).ready(function () {
 
     if (this.id == "clear") {
       input = "";
-    } else if (vnos == "Del") {
-      input = input.slice(0, -1);
     } else if (
       vnos == "BIN" ||
       vnos == "DEC" ||
@@ -265,26 +263,7 @@ function hTd(input) {
   return result;
 }
 function hTo(input) {
-  // Convert hexadecimal to decimal
-  let decimal = 0;
-  for (let i = 0; i < input.length; i++) {
-    let digitValue;
-    if (input[i] >= "0" && input[i] <= "9") {
-      digitValue = input[i] - "0";
-    } else if (input[i] >= "A" && input[i] <= "F") {
-      digitValue = 10 + (input[i].charCodeAt(0) - "A".charCodeAt(0));
-    }
-    decimal = decimal * 16 + digitValue;
-  }
-
-  // Convert decimal to octal
-  let octal = "";
-  while (decimal > 0) {
-    octal = (decimal % 8).toString() + octal;
-    decimal = Math.floor(decimal / 8);
-  }
-
-  return octal;
+  return dTo(hTd(input));
 }
 function oTb(input) {
   let result = "";
