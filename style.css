@@ -14,6 +14,7 @@ th {
   text-align: center;
   font-size: 50px;
   cursor: pointer;
+  font-size: 40px;
 }
 td:hover {
   background-color: #e6e6e6;
@@ -23,14 +24,14 @@ td:active {
 }
 button {
   height: 50px;
-  width: 150px;
+  width: 200px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 25px;
 }
 #display {
   text-align: end;
   cursor: default;
-  font-size: 30px;
+  font-size: 25px;
   overflow-x: auto;
 }
 body {
