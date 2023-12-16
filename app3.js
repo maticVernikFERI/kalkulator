@@ -49,69 +49,92 @@ function makeToCalk() {
     }
 }
 
-function calculate(equasion) {
-    if (equasion.includes('(')) {
-        let start = equasion.indexOf('(');
+function calculate(equation) {
+    if (equation.includes('(')) {
+        let start = equation.indexOf('(');
         let end = 0;
         let count = 0;
-        for (let i = start; i < equasion.length; i++) {
-            if (equasion.charAt(i) == '(') {
+        for (let i = start; i < equation.length; i++) {
+            if (equation.charAt(i) == '(') {
                 count++;
-            } else if (equasion.charAt(i) == ')') {
+            } else if (equation.charAt(i) == ')') {
                 count--;
             }
 
-            if (equasion.charAt(i) == ')' && count == 0) {
+            if (equation.charAt(i) == ')' && count == 0) {
                 end = i;
                 break;
             }
         }
-        console.log(equasion.substring(start + 1, end));
-        equasion = equasion.replace(equasion.substring(start, end + 1), calculate(equasion.substring(start + 1, end)));
+        equation = equation.replace(equation.substring(start, end + 1), calculate(equation.substring(start + 1, end)));
     }
 
-    if (equasion.includes('n')) {
-        equasion = equasion.replace(/n[01]+/, not(equasion.match(/n[01]+/)));
+    if (equation.includes('n')) {
+        equation = equation.replace(/n[01]+/, not(equation.match(/n[01]+/)));
     }
 
-    for (const x of equasion) {
+    for (const x of equation) {
         if (x == 'a') {
-            console.log('and');
-            equasion = equasion.replace(/[01]+a[01]+/, and(equasion.match(/[01]+a[01]+/)));
+            equation = equation.replace(/[01]+a[01]+/, and(equation.match(/[01]+a[01]+/)));
+        }
+        if (x == 'o') {
+            equation = equation.replace(/[01]+o[01]+/, or(equation.match(/[01]+o[01]+/)));
         }
     }
 
-    return equasion;
+    return equation;
 }
 
-function and(equasion) {
-    let poz = equasion[0].indexOf('a');
-    let dig1 = equasion[0].substr(0, poz);
-    let dig2 = equasion[0].substr(poz + 1, equasion[0].length);
+function or(equation) {
+    let poz = equation[0].indexOf('o');
+    let dig1 = equation[0].substr(0, poz);
+    let dig2 = equation[0].substr(poz + 1, equation[0].length);
     let result = '';
 
-    while(dig1.length > dig2.length) {
-        dig2 = '0' + dig2; 
+    while (dig1.length > dig2.length) {
+        dig2 = '0' + dig2;
     }
-    while(dig1.length < dig2.length){
-        dig1 = '0' + dig1; 
+    while (dig1.length < dig2.length) {
+        dig1 = '0' + dig1;
     }
 
-    for(let i = 0; i <dig1.length; i++) {
-        if(dig1.charAt(i) == '1' && dig2.charAt(i) == '1'){
+    for (let i = 0; i < dig1.length; i++) {
+        if (dig1.charAt(i) == '1' || dig2.charAt(i) == '1') {
             result += '1';
-        }else{
+        } else {
             result += '0';
         }
     }
 
-    console.log(dig1 + ' ' + dig2);
+    return result;
+}
+
+function and(equation) {
+    let poz = equation[0].indexOf('a');
+    let dig1 = equation[0].substr(0, poz);
+    let dig2 = equation[0].substr(poz + 1, equation[0].length);
+    let result = '';
+
+    while (dig1.length > dig2.length) {
+        dig2 = '0' + dig2;
+    }
+    while (dig1.length < dig2.length) {
+        dig1 = '0' + dig1;
+    }
+
+    for (let i = 0; i < dig1.length; i++) {
+        if (dig1.charAt(i) == '1' && dig2.charAt(i) == '1') {
+            result += '1';
+        } else {
+            result += '0';
+        }
+    }
 
     return result;
 }
 
-function not(equasion) {
-    let digits = equasion[0].substring(1);
+function not(equation) {
+    let digits = equation[0].substring(1);
     let result = '';
     for (const digit of digits) {
         if (digit == '1') {
