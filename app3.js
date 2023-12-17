@@ -32,7 +32,7 @@ function newInput() {
         if (!correctEq) {
             window.alert('Narobe napisana enačba');
         } else {
-            toCalk = '';
+            
             makeToCalk();
             result = calculate(toCalk);
             input += '=' + result;
@@ -47,6 +47,7 @@ function newInput() {
 
 
 function makeToCalk() {
+    toCalk = '';
     longest = 0;
     for (const char of input) {
         if (/^[A-Z]$/.test(char)) {
@@ -279,8 +280,6 @@ function not(equation) {
 
 //TODO Dodaj preverjanje izraza
 function checkInput() {
-    if (/^[01]+$/.test(input)) {
-    }
 
     return true;
 }
