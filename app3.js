@@ -47,6 +47,7 @@ function newInput() {
 
 
 function makeToCalk() {
+    longest = 0;
     for (const char of input) {
         if (/^[A-Z]$/.test(char)) {
             toCalk += savedVariables[char.charCodeAt(0) - 65];
@@ -65,7 +66,7 @@ function makeToCalk() {
 }
 
 function calculate(equation) {
-    if (equation.includes('(')) {
+    while (equation.includes('(')) {
         let start = equation.indexOf('(');
         let end = 0;
         let count = 0;
