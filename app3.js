@@ -2,6 +2,7 @@ let savedVariables = [];
 let input = '';
 let toCalk = '';
 let result = 0;
+let longest = 0;
 
 $(document).ready(function () {
     $("td[id!='display']").click(newInput);
@@ -44,6 +45,7 @@ function newInput() {
     display(input);
 }
 
+
 function makeToCalk() {
     for (const char of input) {
         if (/^[A-Z]$/.test(char)) {
@@ -52,6 +54,14 @@ function makeToCalk() {
             toCalk += char;
         }
     }
+
+    let nums = toCalk.match(/[01]+/g);
+    for(const num of nums) {
+        if(num.length > longest) {
+            longest = num.length;
+        }
+    }
+    console.log(nums);
 }
 
 function calculate(equation) {
@@ -111,11 +121,11 @@ function xnor(equation) {
     let dig2 = equation[0].substr(poz + 1, equation[0].length);
     let result = '';
 
-    while (dig1.length > dig2.length) {
-        dig2 = '0' + dig2;
-    }
-    while (dig1.length < dig2.length) {
+    while (dig1.length < longest) {
         dig1 = '0' + dig1;
+    }
+    while (dig2.length < longest) {
+        dig2 = '0' + dig2;
     }
 
     for (let i = 0; i < dig1.length; i++) {
@@ -135,11 +145,11 @@ function xor(equation) {
     let dig2 = equation[0].substr(poz + 1, equation[0].length);
     let result = '';
 
-    while (dig1.length > dig2.length) {
-        dig2 = '0' + dig2;
-    }
-    while (dig1.length < dig2.length) {
+    while (dig1.length < longest) {
         dig1 = '0' + dig1;
+    }
+    while (dig2.length < longest) {
+        dig2 = '0' + dig2;
     }
 
     console.log(dig1 + ' ' + dig2);
@@ -163,11 +173,11 @@ function nor(equation) {
     let dig2 = equation[0].substr(poz + 1, equation[0].length);
     let result = '';
 
-    while (dig1.length > dig2.length) {
-        dig2 = '0' + dig2;
-    }
-    while (dig1.length < dig2.length) {
+    while (dig1.length < longest) {
         dig1 = '0' + dig1;
+    }
+    while (dig2.length < longest) {
+        dig2 = '0' + dig2;
     }
 
     for (let i = 0; i < dig1.length; i++) {
@@ -187,11 +197,11 @@ function nand(equation) {
     let dig2 = equation[0].substr(poz + 1, equation[0].length);
     let result = '';
 
-    while (dig1.length > dig2.length) {
-        dig2 = '0' + dig2;
-    }
-    while (dig1.length < dig2.length) {
+    while (dig1.length < longest) {
         dig1 = '0' + dig1;
+    }
+    while (dig2.length < longest) {
+        dig2 = '0' + dig2;
     }
 
     for (let i = 0; i < dig1.length; i++) {
@@ -211,11 +221,11 @@ function or(equation) {
     let dig2 = equation[0].substr(poz + 1, equation[0].length);
     let result = '';
 
-    while (dig1.length > dig2.length) {
-        dig2 = '0' + dig2;
-    }
-    while (dig1.length < dig2.length) {
+    while (dig1.length < longest) {
         dig1 = '0' + dig1;
+    }
+    while (dig2.length < longest) {
+        dig2 = '0' + dig2;
     }
 
     for (let i = 0; i < dig1.length; i++) {
@@ -235,11 +245,11 @@ function and(equation) {
     let dig2 = equation[0].substr(poz + 1, equation[0].length);
     let result = '';
 
-    while (dig1.length > dig2.length) {
-        dig2 = '0' + dig2;
-    }
-    while (dig1.length < dig2.length) {
+    while (dig1.length < longest) {
         dig1 = '0' + dig1;
+    }
+    while (dig2.length < longest) {
+        dig2 = '0' + dig2;
     }
 
     for (let i = 0; i < dig1.length; i++) {
@@ -266,7 +276,7 @@ function not(equation) {
     return result;
 }
 
-//!Dodaj preverjanje izraza
+//TODO Dodaj preverjanje izraza
 function checkInput() {
     if (/^[01]+$/.test(input)) {
     }
