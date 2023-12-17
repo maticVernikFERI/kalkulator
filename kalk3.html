@@ -8,7 +8,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="app3.js"></script>
     <style>
-      /*
       td {
         pointer-events: none;
         background-color: rgb(187, 187, 187);
@@ -19,7 +18,7 @@
       }
       .active:hover {
         background-color: #e6e6e6;
-      }*/
+      }
     </style>
   </head>
 
@@ -36,38 +35,93 @@
           <td id="clear">C</td>
         </tr>
         <tr>
-          <td id="0">0</td>
-          <td id="1">1</td>
-          <td id="(">(</td>
-          <td id=")">)</td>
-          <td id="n">NEG</td>
-          <td id="=">=</td>
+          <td class="num" id="0">0</td>
+          <td class="num" id="1">1</td>
+          <td class="b" id="(">(</td>
+          <td class="b" id=")">)</td>
+          <td class="op" id="n">NEG</td>
+          <td id="equal">=</td>
         </tr>
         <tr>
-          <td id="a">AND</td>
-          <td id="o">OR</td>
-          <td id="e">NAND</td>
-          <td id="u">NOR</td>
-          <td id="x">XOR</td>
-          <td id="z">XNOR</td>
+          <td class="op" id="a">AND</td>
+          <td class="op" id="o">OR</td>
+          <td class="op" id="e">NAND</td>
+          <td class="op" id="u">NOR</td>
+          <td class="op" id="x">XOR</td>
+          <td class="op" id="z">XNOR</td>
         </tr>
         <tr id="variables">
           <td id="new">New</td>
-          <td id="s0"></td>
-          <td id="s1"></td>
-          <td id="s2"></td>
-          <td id="s3"></td>
-          <td id="s4"></td>
+          <td class="var" id="s0"></td>
+          <td class="var" id="s1"></td>
+          <td class="var" id="s2"></td>
+          <td class="var" id="s3"></td>
+          <td class="var" id="s4"></td>
         </tr>
         <tr>
           <td id="del">Del</td>
-          <td id="s5"></td>
-          <td id="s6"></td>
-          <td id="s7"></td>
-          <td id="s8"></td>
-          <td id="s9"></td>
+          <td class="var" id="s5"></td>
+          <td class="var" id="s6"></td>
+          <td class="var" id="s7"></td>
+          <td class="var" id="s8"></td>
+          <td class="var" id="s9"></td>
         </tr>
       </table>
     </div>
+    <script>
+      $(document).ready(function () {
+        $("#clear").addClass("active");
+        $(".num, .b ").addClass("active");
+        var counter = 0;
+        var operator = 0;
+        var varCount = 0;
+        var state = "num";
+
+        $("#clear").click(() => {
+          $(".op, #equal").removeClass("active");
+          $("#clear").addClass("active");
+          counter = 0;
+          operator = 0;
+          varCount = 0;
+          state = "num";
+        });
+        $("td").click(() => {
+          checkState();
+          console.log(counter);
+          console.log(varCount);
+          console.log(operator);
+          console.log(state);
+        });
+
+        $(".num,.var").click(() => {
+          counter++;
+          state = "numO";
+          checkState();
+        });
+        $("#new").click(() => {
+          varCount++;
+          state = "num";
+          checkState();
+        });
+
+        function checkState() {
+          if (state === "num") {
+            $("td").removeClass("active");
+            $(".num,.b,#clear").addClass("active");
+          }
+          if (state === "numO") {
+            $(".op, #equal, #new").addClass("active");
+          }
+          if (state === "del") {
+            $("td").removeClass("active");
+          }
+          $(".var").each(function () {
+            if ($(this).text() != "") {
+              $(this).addClass("active");
+            }
+          });
+        }
+      });
+    </script>
   </body>
 </html>
