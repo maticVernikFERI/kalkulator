@@ -62,7 +62,6 @@ function makeToCalk() {
             longest = num.length;
         }
     }
-    console.log(nums);
 }
 
 function calculate(equation) {
@@ -153,11 +152,9 @@ function xor(equation) {
         dig2 = '0' + dig2;
     }
 
-    console.log(dig1 + ' ' + dig2);
 
     for (let i = 0; i < dig1.length; i++) {
         let x = parseInt(dig1.charAt(i)) + parseInt(dig2.charAt(i));
-        console.log(x);
         if (x % 2 == 0) {
             result += '0';
         } else {
@@ -293,7 +290,6 @@ function addVariable() {
 function newVariable() {
     let name = String.fromCharCode(65 + savedVariables.length);
     let id = '#s' + savedVariables.length;
-    console.log(id);
     let input = $("#display").html();
     let digits = '';
     for (const char of input) {
