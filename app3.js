@@ -27,7 +27,7 @@ function newInput() {
     } else if (this.id == 'clear') {
         input = '';
         toCalk = '';
-    } else if (vnos == '=') {
+    } else if (vnos == 'equal') {
         correctEq = checkInput();
         if (!correctEq) {
             window.alert('Narobe napisana enačba');
