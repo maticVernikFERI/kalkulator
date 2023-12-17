@@ -274,9 +274,15 @@ function not(equation) {
     return result;
 }
 
-//TODO Dodaj preverjanje izraza
 function checkInput() {
-    if (/^[01]+$/.test(input)) {
+    if (/[01]+n[01]+/.test(input)) {
+        return false;
+    }else if(/[01]+\(/.test(input)){
+        return false;
+    }else if(/\)[01]+/.test(input)){
+        return false;
+    }else if(input.split('(').length - 1 != input.split(')').length - 1) {
+        return false;
     }
 
     return true;
