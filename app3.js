@@ -18,12 +18,14 @@ function newInput() {
             window.alert("Error");
         }
     } else if (vnos == 'del') {
-        input = input.slice(0, -1);
+        savedVariables = [];
+        for(let i = 0; i < 10; i++) {
+            let id = '#s' + i;
+            $(id).html('');
+        }
     } else if (this.id == 'clear') {
         input = '';
         toCalk = '';
-        $(".var").remove();
-        savedVariables = [];
     } else if (vnos == '=') {
         correctEq = checkInput();
         if (!correctEq) {
@@ -34,6 +36,8 @@ function newInput() {
             result = calculate(toCalk);
             input += '=' + result;
         }
+    } else if(/s[0-9]/.test(vnos)){
+
     } else {
         input += vnos;
     }
@@ -74,25 +78,28 @@ function calculate(equation) {
         equation = equation.replace(/n[01]+/, not(equation.match(/n[01]+/)));
     }
 
-    for (const x of equation) {
-        if (x == 'a') {
+    let i = 0;
+    while (i < equation.length) {
+        if (equation.charAt(i) == 'a') {
             equation = equation.replace(/[01]+a[01]+/, and(equation.match(/[01]+a[01]+/)));
-        }
-        if (x == 'o') {
+            i = 0;
+        }else if (equation.charAt(i) == 'o') {
             equation = equation.replace(/[01]+o[01]+/, or(equation.match(/[01]+o[01]+/)));
-        }
-        if (x == 'e') {
+            i = 0;
+        }else if (equation.charAt(i) == 'e') {
             equation = equation.replace(/[01]+e[01]+/, nand(equation.match(/[01]+e[01]+/)));
-        }
-        if (x == 'u') {
+            i = 0;
+        }else if (equation.charAt(i) == 'u') {
             equation = equation.replace(/[01]+u[01]+/, nor(equation.match(/[01]+u[01]+/)));
-        }
-        if (x == 'x') {
+            i = 0;
+        }else if (equation.charAt(i) == 'x') {
             equation = equation.replace(/[01]+x[01]+/, xor(equation.match(/[01]+x[01]+/)));
-        }
-        if (x == 'z') {
+            i = 0;
+        }else if (equation.charAt(i) == 'z') {
             equation = equation.replace(/[01]+z[01]+/, xnor(equation.match(/[01]+z[01]+/)));
+            i = 0;
         }
+        i++;
     }
 
     return equation;
@@ -274,17 +281,16 @@ function addVariable() {
 
 function newVariable() {
     let name = String.fromCharCode(65 + savedVariables.length);
-    let cell = document.createElement("td");
+    let id = '#s' + savedVariables.length;
+    console.log(id);
     let input = $("#display").html();
     let digits = '';
     for (const char of input) {
         digits += char;
     }
-    $(cell).attr('id', name);
     savedVariables.push(digits);
 
-    $(cell).html(name).click(addVariable).addClass('var');
-    $("#variables").append(cell);
+    $(id).html(name).click(addVariable).addClass('var');
 }
 
 function display(input) {
