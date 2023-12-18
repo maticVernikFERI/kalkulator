@@ -235,8 +235,8 @@ function calculate(equation) {
  */
 function xnor(equation) {
     let poz = equation[0].indexOf('z');
-    let dig1 = equation[0].substr(0, poz);
-    let dig2 = equation[0].substr(poz + 1, equation[0].length);
+    let dig1 = equation[0].substring(0, poz);
+    let dig2 = equation[0].substring(poz + 1, equation[0].length);
     let result = '';
 
     while (dig1.length < longest) {
@@ -265,8 +265,8 @@ function xnor(equation) {
  */
 function xor(equation) {
     let poz = equation[0].indexOf('x');
-    let dig1 = equation[0].substr(0, poz);
-    let dig2 = equation[0].substr(poz + 1, equation[0].length);
+    let dig1 = equation[0].substring(0, poz);
+    let dig2 = equation[0].substring(poz + 1, equation[0].length);
     let result = '';
 
     while (dig1.length < longest) {
@@ -296,8 +296,8 @@ function xor(equation) {
  */
 function nor(equation) {
     let poz = equation[0].indexOf('u');
-    let dig1 = equation[0].substr(0, poz);
-    let dig2 = equation[0].substr(poz + 1, equation[0].length);
+    let dig1 = equation[0].substring(0, poz);
+    let dig2 = equation[0].substring(poz + 1, equation[0].length);
     let result = '';
 
     while (dig1.length < longest) {
@@ -325,8 +325,8 @@ function nor(equation) {
  */
 function nand(equation) {
     let poz = equation[0].indexOf('e');
-    let dig1 = equation[0].substr(0, poz);
-    let dig2 = equation[0].substr(poz + 1, equation[0].length);
+    let dig1 = equation[0].substring(0, poz);
+    let dig2 = equation[0].substring(poz + 1, equation[0].length);
     let result = '';
 
     while (dig1.length < longest) {
@@ -354,8 +354,8 @@ function nand(equation) {
  */
 function or(equation) {
     let poz = equation[0].indexOf('o');
-    let dig1 = equation[0].substr(0, poz);
-    let dig2 = equation[0].substr(poz + 1, equation[0].length);
+    let dig1 = equation[0].substring(0, poz);
+    let dig2 = equation[0].substring(poz + 1, equation[0].length);
     let result = '';
 
     while (dig1.length < longest) {
@@ -383,8 +383,8 @@ function or(equation) {
  */
 function and(equation) {
     let poz = equation[0].indexOf('a');
-    let dig1 = equation[0].substr(0, poz);
-    let dig2 = equation[0].substr(poz + 1, equation[0].length);
+    let dig1 = equation[0].substring(0, poz);
+    let dig2 = equation[0].substring(poz + 1, equation[0].length);
     let result = '';
 
     while (dig1.length < longest) {
