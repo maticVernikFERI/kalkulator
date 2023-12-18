@@ -6,6 +6,107 @@ let longest = 0;
 
 $(document).ready(function () {
     $("td[id!='display']").click(newInput);
+        $("#clear").addClass("active");
+        $(".num, .b ,#n").addClass("active");
+        var counter = 0;
+        var operator = 0;
+        var varCount = 0;
+        var state = "num";
+        isOp = false;
+
+        $("#clear").click(() => {
+          $(".op, #equal").removeClass("active");
+          $("#clear").addClass("active");
+          $("#new").removeClass("active");
+          counter = 0;
+          operator = 0;
+          state = "num";
+          checkState();
+        });
+        $(".num,.var").click(() => {
+          counter++;
+          isOp = false;
+          state = "numO";
+          checkState();
+        });
+        $("#new").click(() => {
+          varCount++;
+          state = "num";
+          counter = 0;
+          checkState();
+        });
+        $("#del").click(() => {
+          $("td").removeClass("active");
+          $(".var").addClass("active");
+          $(".var").click(function () {
+            $(this).html("");
+            $(this).removeClass("active");
+          });
+          varCount = 0;
+          state = "num";
+          checkState();
+          $("#del").removeClass("active");
+        });
+        $(".op").click(() => {
+          operator++;
+          isOp = true;
+          state = "num";
+          checkState();
+        });
+        $("#n").click(() => {
+          state = "neg";
+          operator++;
+          isOp = true;
+          checkState();
+        });
+        $("#equal").click(() => {
+          state = "equal";
+          checkState();
+        });
+        function checkState() {
+          if (state === "num") {
+            $("td").removeClass("active");
+            $(".num,.b,#clear,#new,#n").addClass("active");
+            if (varCount > 0) {
+              $("#del").addClass("active");
+            }
+          }
+          if (state == "neg") {
+            $("td").removeClass("active");
+            $(".num,.b,#clear").addClass("active");
+          }
+          if (state === "numO") {
+            $(".op, #equal, #n").addClass("active");
+          }
+          if (state === "del") {
+            $("td").removeClass("active");
+          }
+          $(".var").each(function () {
+            if ($(this).text() != "") {
+              $(this).addClass("active");
+            }
+          });
+          if (varCount > 0) {
+            $("#del").addClass("active");
+          }
+          if (operator > 0 && counter > 0) {
+            $("#equal").addClass("active");
+          }
+          if (operator === 0 && counter >= 1) {
+            $("#new").addClass("active");
+          } else {
+            $("#new").removeClass("active");
+          }
+          if (state == "equal") {
+            $("td").removeClass("active");
+            $("#clear").addClass("active");
+          }
+          if (!isOp && counter > 0) {
+            $("#equal").addClass("active");
+          } else {
+            $("#equal").removeClass("active");
+          }
+        }
 });
 
 /**
