@@ -30,6 +30,113 @@ $(document).ready(function () {
     }
     display(input);
   });
+  $("#bin, #dec, #hex, #oct").addClass("active");
+
+  var operationCounter = 0;
+  var numberCounter = 0;
+  var lastOperation = "";
+  function checkOperationCounter() {
+    if (operationCounter === 2) {
+      $("td").removeClass("active");
+      $("#equal, #clear").addClass("active");
+    }
+    if (operationCounter == 1 && numberCounter == 0) {
+      $("#dec, #hex, #oct, #bin").removeClass("active");
+    }
+    if (operationCounter == 1 && numberCounter > 0) {
+      $("#dec, #hex, #oct, #bin").addClass("active");
+      checkOperator();
+    }
+  }
+
+  function checkNumberCounter() {
+    if (operationCounter === 1 && numberCounter === 0) {
+      $("td").removeClass("active");
+      $(
+        "#0, #1, #2, #3, #4, #5, #6, #7, #8, #9, #A, #B, #C, #D, #E, #F"
+      ).addClass("active");
+    }
+    if (numberCounter === 1) {
+      $("#bin, #dec, #hex, #oct").addClass("active");
+      checkOperator();
+    }
+  }
+
+  function checkOperator() {
+    if (lastOperation == "bin") {
+      $("#bin").removeClass("active");
+    }
+    if (lastOperation == "dec") {
+      $("#dec").removeClass("active");
+    }
+    if (lastOperation == "hex") {
+      $("#hex").removeClass("active");
+    }
+    if (lastOperation == "oct") {
+      $("#oct").removeClass("active");
+    }
+  }
+  $("#bin").click(function () {
+    if (lastOperation !== "bin") {
+      operationCounter++;
+      lastOperation = "bin";
+      $("#0, #1").addClass("active");
+      checkOperationCounter();
+    }
+    $("#clear").addClass("active");
+  });
+
+  $("#dec").click(function () {
+    if (lastOperation !== "dec") {
+      operationCounter++;
+      lastOperation = "dec";
+      $("#0, #1, #2, #3, #4, #5, #6, #7, #8, #9").addClass("active");
+      checkOperationCounter();
+    }
+    $("#clear").addClass("active");
+  });
+
+  $("#hex").click(function () {
+    if (lastOperation !== "hex") {
+      operationCounter++;
+      lastOperation = "hex";
+      $(
+        "#0, #1, #2, #3, #4, #5, #6, #7, #8, #9, #A, #B, #C, #D, #E, #F"
+      ).addClass("active");
+      checkOperationCounter();
+    }
+    $("#clear").addClass("active");
+  });
+
+  $("#oct").click(function () {
+    if (lastOperation !== "oct") {
+      lastOperation = "oct";
+      operationCounter++;
+      $("#0, #1, #2, #3, #4, #5, #6, #7").addClass("active");
+      checkOperationCounter();
+    }
+    $("#clear").addClass("active");
+  });
+
+  $("#0, #1, #2, #3, #4, #5, #6, #7, #8, #9, #A, #B, #C, #D, #E, #F").click(
+    function () {
+      checkOperator();
+      numberCounter++;
+      checkNumberCounter();
+    }
+  );
+
+  $("#clear").click(function () {
+    operationCounter = 0;
+    numberCounter = 0;
+    lastOperation = "";
+    $("td").removeClass("active");
+    $("#bin, #dec, #hex, #oct").addClass("active");
+  });
+  $("#equal").click(function () {
+    $("td").removeClass("active");
+    $("#clear").addClass("active");
+  });
 });
 
 /**
@@ -379,112 +486,3 @@ function handleFile(files) {
   };
   reader.readAsText(file);
 }
-$(document).ready(function () {
-  $("#bin, #dec, #hex, #oct").addClass("active");
-
-  var operationCounter = 0;
-  var numberCounter = 0;
-  var lastOperation = "";
-  function checkOperationCounter() {
-    if (operationCounter === 2) {
-      $("td").removeClass("active");
-      $("#equal, #clear").addClass("active");
-    }
-    if (operationCounter == 1 && numberCounter == 0) {
-      $("#dec, #hex, #oct, #bin").removeClass("active");
-    }
-    if (operationCounter == 1 && numberCounter > 0) {
-      $("#dec, #hex, #oct, #bin").addClass("active");
-      checkOperator();
-    }
-  }
-
-  function checkNumberCounter() {
-    if (operationCounter === 1 && numberCounter === 0) {
-      $("td").removeClass("active");
-      $(
-        "#0, #1, #2, #3, #4, #5, #6, #7, #8, #9, #A, #B, #C, #D, #E, #F"
-      ).addClass("active");
-    }
-    if (numberCounter === 1) {
-      $("#bin, #dec, #hex, #oct").addClass("active");
-      checkOperator();
-    }
-  }
-
-  function checkOperator() {
-    if (lastOperation == "bin") {
-      $("#bin").removeClass("active");
-    }
-    if (lastOperation == "dec") {
-      $("#dec").removeClass("active");
-    }
-    if (lastOperation == "hex") {
-      $("#hex").removeClass("active");
-    }
-    if (lastOperation == "oct") {
-      $("#oct").removeClass("active");
-    }
-  }
-  $("#bin").click(function () {
-    if (lastOperation !== "bin") {
-      operationCounter++;
-      lastOperation = "bin";
-      $("#0, #1").addClass("active");
-      checkOperationCounter();
-    }
-    $("#clear").addClass("active");
-  });
-
-  $("#dec").click(function () {
-    if (lastOperation !== "dec") {
-      operationCounter++;
-      lastOperation = "dec";
-      $("#0, #1, #2, #3, #4, #5, #6, #7, #8, #9").addClass("active");
-      checkOperationCounter();
-    }
-    $("#clear").addClass("active");
-  });
-
-  $("#hex").click(function () {
-    if (lastOperation !== "hex") {
-      operationCounter++;
-      lastOperation = "hex";
-      $(
-        "#0, #1, #2, #3, #4, #5, #6, #7, #8, #9, #A, #B, #C, #D, #E, #F"
-      ).addClass("active");
-      checkOperationCounter();
-    }
-    $("#clear").addClass("active");
-  });
-
-  $("#oct").click(function () {
-    if (lastOperation !== "oct") {
-      lastOperation = "oct";
-      operationCounter++;
-      $("#0, #1, #2, #3, #4, #5, #6, #7").addClass("active");
-      checkOperationCounter();
-    }
-    $("#clear").addClass("active");
-  });
-
-  $("#0, #1, #2, #3, #4, #5, #6, #7, #8, #9, #A, #B, #C, #D, #E, #F").click(
-    function () {
-      checkOperator();
-      numberCounter++;
-      checkNumberCounter();
-    }
-  );
-
-  $("#clear").click(function () {
-    operationCounter = 0;
-    numberCounter = 0;
-    lastOperation = "";
-    $("td").removeClass("active");
-    $("#bin, #dec, #hex, #oct").addClass("active");
-  });
-  $("#equal").click(function () {
-    $("td").removeClass("active");
-    $("#clear").addClass("active");
-  });
-});
