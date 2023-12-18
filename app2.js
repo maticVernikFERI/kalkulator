@@ -32,6 +32,15 @@ $(document).ready(function () {
   });
 });
 
+/**
+ * Converts a given input to a desiered format based on the input format.
+ * The input format should follow the pattern: [base][number][outputBase]
+ * where base can be 'b' (binary), 'd' (decimal), 'h' (hexadecimal), or 'o' (octal),
+ * number is the actual number to be converted, and outputBase is the desired base of the result.
+ * 
+ * @param {string} input - The input string to be converted.
+ * @returns {number} - The converted decimal number, or -1 if the input format is invalid.
+ */
 function checkInput(input) {
   let result = -1;
   let forCalc = input.substr(1, input.length - 2);
@@ -310,6 +319,10 @@ function oTh(input) {
   return bTh(oTb(input));
 }
 
+/**
+ * Displays the converted output based on the input.
+ * @param {string} input - The input string to be converted.
+ */
 function display(input) {
   let output = "";
   for (const char of input) {
@@ -335,6 +348,10 @@ function display(input) {
   }
   $("#display").html(output);
 }
+/**
+ * Handles the selected file and processes its contents.
+ * @param {FileList} files - The list of selected files.
+ */
 function handleFile(files) {
   var file = files[0];
   var reader = new FileReader();
