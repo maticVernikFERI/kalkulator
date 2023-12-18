@@ -1,0 +1,121 @@
+Ko je dokument pripravljen, do:
+   Inicializiraj 'input' kot "0" in 'calculationPerformed' kot false.
+   Ko je katerikoli element 'td' kliknjen, do:
+      Pridobi notranji HTML kliknjenega elementa in ga dodeli 'vnos'.
+
+      if je 'vnos' "C", do:
+         if je 'calculationPerformed' true, ponastavi 'input' na "0" in 'calculationPerformed' na false.
+         if izračun ni bil izveden, nastavi 'input' na "".
+         Posodobi prikaz z novim 'input'.
+
+      if je 'vnos' "Del", do:
+         Odstrani zadnji znak iz 'input'.
+         Posodobi prikaz z novim 'input'.
+
+      if je 'vnos' "=", do:
+         try:
+            Nastavi 'input' na rezultat funkcije calculate('input') in posodobi prikaz z novim 'input'.
+            Nastavi 'calculationPerformed' na true.
+         catch:
+            Nastavi 'input' na "Napaka", posodobi prikaz in počisti 'input'.
+
+      else do:
+         if je trenutni prikaz "0", "Napaka" ali "NaN", nastavi 'input' na kliknjeno vrednost.
+         else dodaj kliknjeno vrednost k 'input'.
+         Posodobi prikaz z novim 'input'.
+
+function calculate('e') 
+   Nastavi 'e' na rezultat funcije addPriority('e').
+   Nastavi 'e' na rezultat funcije removeBrackets('e').
+   Nastavi 'total' na rezultat funkcije calculateBracket('e').
+   
+   if 'total' ni število, do: 
+      vrni "Napaka";
+   
+   vrni pretvoriVniz(total);
+   
+function addPriority('input')
+   Inicializiraj 'operaterjiVisokePrioritete' na polje: ["×", "÷", "\\^", "%"].
+   Inicializiraj 'regex' na regularni izraz: /(\d+\.?\d*)(['operaterjiVisokePrioritete'])(\d+\.?\d*)/g.
+   Okoli vsakega ujemanja v 'input' dodaj  oklepaje in vrni rezultat.
+
+function findBracketIndex('e')
+   Inicializiraj 'stack' in 'bracketPairs' na prazno polje.
+      for vsak 'i' začne na 0 do dolžine 'e', do:
+         if je 'e[i]' "(", do:
+            Dodaj 'i' v 'stack'.
+         else if je 'e[i]' ")", do:
+            if 'sklad' ni prazen, do:
+               Dodaj  polje z elementoma stack brez zadnjega elementa in 'i' v 'bracketPairs'.
+   Vrni naraščajoče urejeno polje 'bracketPairs'.
+
+function calculateBracket('e')
+   Inicializiraj  'elements' na prazno polje.
+   Inicializiraj 'i' na 0.
+   while 'i' < dolžine 'e', do:
+      if je 'e[i]' "(", do:
+         Inicializiraj 'bracketCount' na 1
+         Inicializiraj 'innerExpression' na "".
+         Inkrementiraj 'i'.
+         while je 'bracketCount' > 0, do:
+            if je 'e[i]' "(", do:
+               Inkrementiraj 'bracketCount'.
+            else if je 'e[i]' ")", do:
+               Dekrementiraj 'bracketCount'.
+            
+               if je 'bracketCount' > 0, do:
+               Dodaj 'e[i]' v 'innerExpression'.
+            Inkrementiraj 'i'.
+         Inicializiraj 'result' na rezultat funkcije calculateBracket('innerExpression').
+         Dodaj 'result' v 'elements'.
+         if je 'result' število in je i < dolžine 'e' in 'e[i]' ni ")" do:
+            Dodaj 'e[i]' v 'elements'.
+            Inkrementiraj 'i'.
+      else do:
+         Inicializiraj 'num' na "".
+         while 'i' < dolžine 'e' in (je rezultat funkcije isDigit('e[i]') true  or je 'e[i]' "."), do:
+            Dodaj 'e[i]' v 'num'.
+            Inkrementiraj 'i'.
+         Nastavi 'num' na na 0, if je 'num' prazen, else nastavi 'num' na 'num' kot realno število.
+         Dodaj 'num' v 'elements'.
+         if je 'i' < dolžine 'e' in 'e[i]' ni ")" do:
+            Dodaj 'e[i]' v 'elements'.
+            Inkrementiraj 'i'.
+   
+   for vsak 'operator' izmed ["^", "√", "×", "÷", "%", "+", "-"], do:
+      while 'operator' je v 'elements', do:
+         Inicializiraj 'index' na indeks 'operator' v 'elements'.
+         Inicializiraj 'num1' na 'elements[index - 1]'.
+         Inicializiraj 'num2' na 'elements[index + 1]'.
+         Definiraj 'result'.
+         if je 'operator' "^", do:
+            Nastavi 'result' na 'num1' na potenco 'num2'.
+         else if je 'operator' "√", do:
+            if je 'num2' negativno število, do:
+               Vrni "Napaka".
+            Nastavi 'result' na 'num1' na potenco 1 / 'num2'.
+         else if je 'operator' "×", do:
+            Nastavi 'result' na 'num1' pomnoženo z 'num2'.
+         else if je 'operator' "÷", do:
+            Nastavi 'result' na 'num1' deljeno z 'num2'.
+         else if je 'operator' "%", do:
+            Nastavi 'result' na 'num1' modulo 'num2'.
+         else if je 'operator' "+", do:
+            Nastavi 'result' na 'num1' plus 'num2'.
+         else if je 'operator' "-", do:
+            Nastavi 'result' na 'num1' minus 'num2'.
+         Odstrani 'num1' in 'num2' iz 'elements' in na njuno mesto dodaj 'result'.
+   Vrni 'elements[0]'.
+
+function isDigit('char')
+   Vrni true, if je 'char' število, else vrni false.
+
+function removeBrackets('e')
+   Inicializiraj 'bracketPairs' na rezultat funkcije findBracketIndex('e').
+   while je dolžina 'bracketPairs' > 0, do:
+      Inicializiraj 'innermostPair' na zadnji element 'bracketPairs'.
+      Inicializiraj 'start' na prvi element 'innermostPair'.
+      Inicializiraj 'end' na drugi element 'innermostPair'.
+      Inicializiraj 'substring' na podniz 'e' od začetka do 'start', dodaj 'result' in 'substring' na podniz 'e' od 'end' naprej.
+      Nastavi 'bracketPairs' na rezultat funkcije findBracketIndex('e').
+   Vrni 'e'.
