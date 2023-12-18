@@ -150,7 +150,7 @@ $(document).ready(function () {
  */
 function checkInput(input) {
   let result = -1;
-  let forCalc = input.substring(1, input.length - 2);
+  let forCalc = input.substring(1, input.length - 1);
   if (/^([b][0-1]+[doh])$/.test(input)) {
     switch (input.charAt(input.length - 1)) {
       case "d":
