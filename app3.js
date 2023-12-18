@@ -8,6 +8,9 @@ $(document).ready(function () {
     $("td[id!='display']").click(newInput);
 });
 
+/**
+ * Handles the input logic for the calculator.
+ */
 function newInput() {
     let vnos = this.id; //Trenutni vnos
 
@@ -46,6 +49,9 @@ function newInput() {
 }
 
 
+/**
+ * Converts the input string to a that is going to be calculated.
+ */
 function makeToCalk() {
     longest = 0;
     for (const char of input) {
@@ -64,6 +70,12 @@ function makeToCalk() {
     }
 }
 
+/**
+ * Calculates the result of a logical equation.
+ * 
+ * @param {string} equation - The logical equation to be evaluated.
+ * @returns {string} - The result of the equation.
+ */
 function calculate(equation) {
     while (equation.includes('(')) {
         let start = equation.indexOf('(');
@@ -115,6 +127,11 @@ function calculate(equation) {
     return equation;
 }
 
+/**
+ * Performs XNOR operation on the given equation.
+ * @param {string[]} equation - The equation to perform XNOR operation on.
+ * @returns {string} - The result of the XNOR operation.
+ */
 function xnor(equation) {
     let poz = equation[0].indexOf('z');
     let dig1 = equation[0].substr(0, poz);
@@ -139,6 +156,12 @@ function xnor(equation) {
     return result;
 }
 
+/**
+ * Performs an XOR operation on the given equation.
+ * 
+ * @param {string[]} equation - The equation to perform XOR operation on.
+ * @returns {string} - The result of the XOR operation.
+ */
 function xor(equation) {
     let poz = equation[0].indexOf('x');
     let dig1 = equation[0].substr(0, poz);
@@ -165,6 +188,11 @@ function xor(equation) {
     return result;
 }
 
+/**
+ * Performs a bitwise NOR operation on two binary numbers.
+ * @param {string[]} equation - An array containing a single string representing the binary numbers to perform the NOR operation on.
+ * @returns {string} - The result of the NOR operation as a binary string.
+ */
 function nor(equation) {
     let poz = equation[0].indexOf('u');
     let dig1 = equation[0].substr(0, poz);
@@ -189,6 +217,11 @@ function nor(equation) {
     return result;
 }
 
+/**
+ * Performs a NAND operation on the given equation.
+ * @param {string[]} equation - The equation to perform the NAND operation on.
+ * @returns {string} - The result of the NAND operation.
+ */
 function nand(equation) {
     let poz = equation[0].indexOf('e');
     let dig1 = equation[0].substr(0, poz);
@@ -213,6 +246,11 @@ function nand(equation) {
     return result;
 }
 
+/**
+ * Performs a logical OR operation on the given equation.
+ * @param {string[]} equation - The equation to perform the operation on.
+ * @returns {string} - The result of the logical OR operation.
+ */
 function or(equation) {
     let poz = equation[0].indexOf('o');
     let dig1 = equation[0].substr(0, poz);
@@ -237,6 +275,11 @@ function or(equation) {
     return result;
 }
 
+/**
+ * Performs bitwise AND operation on two binary numbers.
+ * @param {string[]} equation - An array containing a single string representing the binary numbers to be ANDed.
+ * @returns {string} - The result of the bitwise AND operation as a binary string.
+ */
 function and(equation) {
     let poz = equation[0].indexOf('a');
     let dig1 = equation[0].substr(0, poz);
@@ -261,6 +304,11 @@ function and(equation) {
     return result;
 }
 
+/**
+ * Performs a bitwise NOT operation on the given equation.
+ * @param {string[]} equation - The equation to perform the operation on.
+ * @returns {string} - The result of the bitwise NOT operation.
+ */
 function not(equation) {
     let digits = equation[0].substring(1);
     let result = '';
@@ -274,6 +322,11 @@ function not(equation) {
     return result;
 }
 
+
+/**
+ * Checks the validity of the input.
+ * @returns {boolean} True if the input is valid, false otherwise.
+ */
 function checkInput() {
     if (/[01]+n[01]+/.test(input)) {
         return false;
@@ -288,11 +341,17 @@ function checkInput() {
     return true;
 }
 
+/**
+ * Adds the name of the clicked element to the input variable and displays it.
+ */
 function addVariable() {
     input += $(this).text();
     display(input);
 }
 
+/**
+ * Creates a new variable.
+ */
 function newVariable() {
     let name = String.fromCharCode(65 + savedVariables.length);
     let id = '#s' + savedVariables.length;
@@ -306,6 +365,10 @@ function newVariable() {
     $(id).html(name).click(addVariable).addClass('var');
 }
 
+/**
+ * Displays the converted output based on the input.
+ * @param {string} input - The input string to be converted.
+ */
 function display(input) {
     let output = '';
     for (const char of input) {
