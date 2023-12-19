@@ -1,7 +1,7 @@
 Ko je dokument pripravljen, do:
     Inicializiraj 'input' ns prazen niz.
     Inicializiraj 'result' na 0.
-    Ko je katerikoli element 'td' kliknjen, do:
+    Ko je katerikoli element 'td', ki nima id-ja "display" kliknjen, do:
         Inicializiraj 'vnos' na vrednost elementa 'td'.
         if je 'input' oblike končne enačbe z rezultatom, do:
             Nastavi 'input' na prazen niz.

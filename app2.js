@@ -1,7 +1,7 @@
 $(document).ready(function () {
   let input = ""; //Za celotni vnos
   let result = 0;
-  $("td").click(function () {
+  $("td[id!='display']").click(function () {
     let vnos = this.innerHTML; //Trenutni vnos
 
     //Preveri če je izpisan trenutno že izračun končni

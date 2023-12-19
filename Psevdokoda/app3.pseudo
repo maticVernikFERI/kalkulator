@@ -1,0 +1,226 @@
+Deklaracija praznega polja savedVariables
+Deklaracija prazne nize input
+Deklaracija prazne nize toCalk
+Deklaracija spremenljivke result z začetno vrednostjo 0
+Deklaracija spremenljivke longest z začetno vrednostjo 0
+
+Ko je dokument pripravljen, do:
+    Ko je katerikoli element 'td', ki nima ID-ja "display" kliknjen kliči funkcijo newInput()
+
+function newInput()
+    Nastavi 'vnos' na ID elementa, ki je bil kliknjen
+    if je 'vnos' enak "new"
+        if je vsebina elementa z ID "display" sestavljena samo iz 0 in 1, do:
+            Kliči funkcijo newVariable().
+            Nastavi 'input' na prazen niz.
+        else prikaži opozorilo "Error".
+    else if je vnos enak "del", do:
+        Nastavi 'savedVariables' na prazno polje.
+        for i od 0 do 9, korak 1, do:
+            Nastavi 'id' na '#s' + i.
+            Nastavi HTML vsebino elementa z ID id na prazen niz.
+    else if je ID elementa, ki je bil kliknjen enak "clear", do:
+        Nastavi 'input' in 'toCalk' na prazen niz.
+    else if je vnos enak "equal", do:
+        Nastavi 'correctEq' na rezultat funkcije checkInput().
+        if 'correctEq' ni true, do:
+            Prikaži opozorilo "Narobe napisana enačba".
+        else do:
+            Nastavi 'toCalk' na prazen niz.
+            Kliči funkcijo makeToCalk().
+            Nastavi result na rezultat funkcije calculate('toCalk').
+            Dodaj '=' in 'result' k 'input'.
+    else if 'vnos' ustreza regularnemu izrazu /s[0-9]/, ne naredi nič.
+    else do:
+        Dodaj 'vnos' k 'input'.
+    Kliči funkcijo display('input').
+
+function makeToCalk()
+    Nastavi 'longest' na 0
+    Za vsak znak v 'input'.
+    if je znak velika črka, do:
+        Dodaj 'savedVariables'[znak v ASCII - 65] k 'toCalk' - za "A" je to 0, za "B" 1, ...
+    else dodaj znak k 'toCalk'.
+    Nastavi 'nums' na vse skupine 0 in 1 v 'toCalk'.
+    for vsako število v 'nums', do:
+        if je dolžina števila večja od 'longest', do:
+            Nastavi 'longest' na dolžino števila.
+
+function calculate('equation') 
+    while 'equation' vsebuje "(", do:
+        Nastavi 'start' na indeks prve "(" v 'equation'.
+        Nastavi 'end' na 0
+        Nastavi 'count' na 0
+        for 'i' od 'start' do dolžine 'equation', korak 1, do:
+        if je znak na mestu 'i' v 'equation' enak '('
+            Povečaj 'count' za 1
+        else if je znak na mestu 'i' v 'equation' enak ')'
+            Zmanjšaj 'count' za 1
+        else if je znak na mestu 'i' v 'equation' enak ')' in je 'count' enak 0
+            Nastavi 'end' na 'i' in prekini zanko.
+    Zamenjaj podniz od 'start' do 'end' + 1 v 'equation' z rezultatom funkcije 'calculate' na podnizu od 'start' + 1 do 'end' v 'equation'
+    if 'equation' vsebuje 'n'
+        Zamenjaj prvo pojavitev "n", ki ji sledi ena ali več 0 ali 1 v 'equation' z rezultatom funkcije not(na tem ujemanju).
+    Nastavi 'i' na 0
+    while je 'i' manjši od dolžine 'equation', do:
+        if je znak na mestu 'i' v 'equation' enak "a", do:
+            Zamenjaj prvo pojavitev ena ali več 0 ali 1 sledi 'a' sledi ena ali več 0 ali 1 v 'equation' z rezultatom funkcije and(na tem ujemanju).
+            Nastavi 'i' na 0
+        else if je znak na mestu 'i' v 'equation' enak "o", do:
+            Zamenjaj prvo pojavitev ena ali več 0 ali 1 sledi 'o' sledi ena ali več 0 ali 1 v 'equation' z rezultatom funkcije or(na tem ujemanju).
+            Nastavi 'i' na 0
+        else if je znak na mestu 'i' v 'equation' enak "e", do:
+            Zamenjaj prvo pojavitev ena ali več 0 ali 1 sledi 'e' sledi ena ali več 0 ali 1 v 'equation' z rezultatom funkcije nand(na tem ujemanju).
+            Nastavi 'i' na 0
+        else if je znak na mestu 'i' v 'equation' enak "u", do:
+            Zamenjaj prvo pojavitev ena ali več 0 ali 1 sledi 'u' sledi ena ali več 0 ali 1 v 'equation' z rezultatom funkcije nor(na tem ujemanju).
+            Nastavi 'i' na 0
+        else if je znak na mestu 'i' v 'equation' enak "x", do:
+            Zamenjaj prvo pojavitev ena ali več 0 ali 1 sledi 'x' sledi ena ali več 0 ali 1 v 'equation' z rezultatom funkcije xor(na tem ujemanju).
+            Nastavi 'i' na 0
+        else if je znak na mestu 'i' v 'equation' enak "z", do:
+            Zamenjaj prvo pojavitev ena ali več 0 ali 1 sledi 'z' sledi ena ali več 0 ali 1 v 'equation' z rezultatom funkcije xnor(na tem ujemanju).
+            Nastavi 'i' na 0
+        Povečaj 'i' za 1
+    return 'equation'.
+
+function xnor('equation')
+    Nastavi 'poz' na indeks prve 'z' v prvem elementu 'equation'.
+    Nastavi 'dig1' na podniz od začetka do 'poz' v prvem elementu 'equation'.
+    Nastavi 'dig2' na podniz od 'poz + 1' do konca v prvem elementu 'equation'.
+    Nastavi 'result' na prazen niz.
+    while je dolžina 'dig1' manjša od 'longest', do:
+        Dodaj "0" na začetek 'dig1'.
+    while je dolžina 'dig2' manjša od 'longest', do:
+       Dodaj "0" na začetek 'dig2'.
+    for 'i' od 0 do dolžine 'dig1', do:
+        if je znak na mestu 'i' v 'dig1' plus znak na mestu 'i' v 'dig2' deljiv z 2
+            Dodaj "1" k 'result'.
+        else do:
+            Dodaj "0" k 'result'.
+    return 'result'.
+
+function xor('equation')
+    Nastavi 'poz' na indeks prve 'x' v prvem elementu 'equation'.
+    Nastavi 'dig1' na podniz od začetka do 'poz' v prvem elementu 'equation'.
+    Nastavi 'dig2' na podniz od 'poz + 1' do konca v prvem elementu 'equation'.
+    Nastavi 'result' na prazen niz.
+    while je dolžina 'dig1' manjša od 'longest', do:
+        Dodaj "0" na začetek 'dig1'.
+    while je dolžina 'dig2' manjša od 'longest', do:
+       Dodaj "0" na začetek 'dig2'.
+    for 'i' od 0 do dolžine 'dig1', do:
+        if je znak na mestu 'i' v 'dig1' plus znak na mestu 'i' v 'dig2' deljiv z 2
+            Dodaj "0" k 'result'.
+        else do:
+            Dodaj "1" k 'result'.
+    return 'result'.
+
+function nor('equation')
+    Nastavi 'poz' na indeks prve 'u' v prvem elementu 'equation'.
+    Nastavi 'dig1' na podniz od začetka do 'poz' v prvem elementu 'equation'.
+    Nastavi 'dig2' na podniz od 'poz + 1' do konca v prvem elementu 'equation'.
+    Nastavi 'result' na prazen niz.
+    while je dolžina 'dig1' manjša od 'longest', do:
+        Dodaj "0" na začetek 'dig1'.
+    while je dolžina 'dig2' manjša od 'longest', do:
+    Dodaj "0" na začetek 'dig2'.
+    for 'i' od 0 do dolžine 'dig1', do:
+        if je znak na mestu 'i' v 'dig1' enak '1' ali znak na mestu 'i' v 'dig2' enak '1'
+            Dodaj "0" k 'result'.
+        else do:
+            Dodaj "1" k 'result'.
+    return 'result'.
+
+function nand('equation')
+    Nastavi 'poz' na indeks prve 'e' v prvem elementu 'equation'.
+    Nastavi 'dig1' na podniz od začetka do 'poz' v prvem elementu 'equation'.
+    Nastavi 'dig2' na podniz od 'poz + 1' do konca v prvem elementu 'equation'.
+    Nastavi 'result' na prazen niz.
+    while je dolžina 'dig1' manjša od 'longest', do:
+        Dodaj "0" na začetek 'dig1'.
+    while je dolžina 'dig2' manjša od 'longest', do:
+    Dodaj "0" na začetek 'dig2'.
+    for 'i' od 0 do dolžine 'dig1', do:
+        if je znak na mestu 'i' v 'dig1' enak '1' in znak na mestu 'i' v 'dig2' enak '1'
+            Dodaj "0" k 'result'.
+        else do:
+            Dodaj "1" k 'result'.
+    return 'result'.
+
+function or('equation')
+    Nastavi 'poz' na indeks prve 'o' v prvem elementu 'equation'.   
+    Nastavi 'dig1' na podniz od začetka do 'poz' v prvem elementu 'equation'.
+    Nastavi 'dig2' na podniz od 'poz + 1' do konca v prvem elementu 'equation'.
+    Nastavi 'result' na prazen niz.
+    while je dolžina 'dig1' manjša od 'longest', do:
+        Dodaj "0" na začetek 'dig1'.
+    while je dolžina 'dig2' manjša od 'longest', do:
+    Dodaj "0" na začetek 'dig2'.
+    for 'i' od 0 do dolžine 'dig1', do:
+        if je znak na mestu 'i' v 'dig1' enak '1' ali znak na mestu 'i' v 'dig2' enak '1'
+            Dodaj "1" k 'result'.
+        else do:
+            Dodaj "0" k 'result'.
+    return 'result'.
+
+function and('equation')
+    Nastavi 'poz' na indeks prve 'o' v prvem elementu 'equation'.   
+    Nastavi 'dig1' na podniz od začetka do 'poz' v prvem elementu 'equation'.
+    Nastavi 'dig2' na podniz od 'poz + 1' do konca v prvem elementu 'equation'.
+    Nastavi 'result' na prazen niz.
+    while je dolžina 'dig1' manjša od 'longest', do:
+        Dodaj "0" na začetek 'dig1'.
+    while je dolžina 'dig2' manjša od 'longest', do:
+    Dodaj "0" na začetek 'dig2'.
+    for 'i' od 0 do dolžine 'dig1', do:
+        if je znak na mestu 'i' v 'dig1' enak '1' in znak na mestu 'i' v 'dig2' enak '1'
+            Dodaj "1" k 'result'.
+        else do:
+            Dodaj "0" k 'result'.
+    return 'result'.
+
+function not('equation')
+    Nastavi 'digits' na podniz od drugega znaka naprej v 'equation'.
+    Nastavi 'result' na prazen niz.
+    for vsak 'digit' v 'digits', do:
+        if je 'digit' enak '1', do:
+            Dodaj '0' k 'result'.
+        else do:
+            Dodaj '1' k 'result'.
+    return 'result'
+
+function checkInput()
+    if 'input' ustreza regularnemu izrazu /[01]+n[01]+/, return false.
+    else if 'input' ustreza regularnemu izrazu /[01]+\(/, return false.
+    else if 'input' ustreza regularnemu izrazu /\)[01]+/, return false.
+    else if število '(' v vnosu ni enako številu ')' v vnosu, return false.
+    else return true.
+
+function addVariable()
+    Dodaj besedilo kliknjenega elementa k 'input'.
+    Kliči funkcijo display('input').
+
+function newVariable()
+    Nastavi 'name' na znak ASCII, ki ustreza 65 plus dolžina 'savedVariables'.
+    Nastavi 'id' na '#s' plus dolžina 'savedVariables'.
+    Nastavi 'input' na vsebino elementa z ID 'display'.
+    Nastavi 'digits' na prazen niz.
+    for vsak 'char' v 'input', do:
+        Dodaj 'char' k 'digits'.
+    Dodaj 'digits' v 'savedVariables'.
+    Nastavi vsebino elementa z ID 'id' na 'name', dodaj mu klik dogodek 'addVariable' in dodaj razred 'var'.
+
+function display('input')
+    Nastavi 'output' na prazen niz.
+    for vsak 'char' v 'input', do:
+        Če je 'char' enak 'n', dodaj ' NEG ' k 'output'.
+        Če je 'char' enak 'a', dodaj ' AND ' k 'output'.
+        Če je 'char' enak 'o', dodaj ' OR ' k 'output'.
+        Če je 'char' enak 'e', dodaj ' NAND ' k 'output'.
+        Če je 'char' enak 'u', dodaj ' NOR ' k 'output'.
+        Če je 'char' enak 'x', dodaj ' XOR ' k 'output'.
+        Če je 'char' enak 'z', dodaj ' XNOR ' k 'output'.
+        Če je 'char' enak '=', dodaj ' = ' k 'output'.
+        Če je 'char' enak '0' ali '1', dodaj 'char' k 'output'.
+    Nastavi HTML vsebino elementa z ID 'display' na 'output'.

@@ -6,107 +6,107 @@ let longest = 0;
 
 $(document).ready(function () {
     $("td[id!='display']").click(newInput);
-        $("#clear").addClass("active");
-        $(".num, .b ,#n").addClass("active");
-        var counter = 0;
-        var operator = 0;
-        var varCount = 0;
-        var state = "num";
-        isOp = false;
+    $("#clear").addClass("active");
+    $(".num, .b ,#n").addClass("active");
+    var counter = 0;
+    var operator = 0;
+    var varCount = 0;
+    var state = "num";
+    isOp = false;
 
-        $("#clear").click(() => {
-          $(".op, #equal").removeClass("active");
-          $("#clear").addClass("active");
-          $("#new").removeClass("active");
-          counter = 0;
-          operator = 0;
-          state = "num";
-          checkState();
-        });
-        $(".num,.var").click(() => {
-          counter++;
-          isOp = false;
-          state = "numO";
-          checkState();
-        });
-        $("#new").click(() => {
-          varCount++;
-          state = "num";
-          counter = 0;
-          checkState();
-        });
-        $("#del").click(() => {
-          $("td").removeClass("active");
-          $(".var").addClass("active");
-          $(".var").click(function () {
+    $("#clear").click(() => {
+        $(".op, #equal").removeClass("active");
+        $("#clear").addClass("active");
+        $("#new").removeClass("active");
+        counter = 0;
+        operator = 0;
+        state = "num";
+        checkState();
+    });
+    $(".num,.var").click(() => {
+        counter++;
+        isOp = false;
+        state = "numO";
+        checkState();
+    });
+    $("#new").click(() => {
+        varCount++;
+        state = "num";
+        counter = 0;
+        checkState();
+    });
+    $("#del").click(() => {
+        $("td").removeClass("active");
+        $(".var").addClass("active");
+        $(".var").click(function () {
             $(this).html("");
             $(this).removeClass("active");
-          });
-          varCount = 0;
-          state = "num";
-          checkState();
-          $("#del").removeClass("active");
         });
-        $(".op").click(() => {
-          operator++;
-          isOp = true;
-          state = "num";
-          checkState();
-        });
-        $("#n").click(() => {
-          state = "neg";
-          operator++;
-          isOp = true;
-          checkState();
-        });
-        $("#equal").click(() => {
-          state = "equal";
-          checkState();
-        });
-        function checkState() {
-          if (state === "num") {
+        varCount = 0;
+        state = "num";
+        checkState();
+        $("#del").removeClass("active");
+    });
+    $(".op").click(() => {
+        operator++;
+        isOp = true;
+        state = "num";
+        checkState();
+    });
+    $("#n").click(() => {
+        state = "neg";
+        operator++;
+        isOp = true;
+        checkState();
+    });
+    $("#equal").click(() => {
+        state = "equal";
+        checkState();
+    });
+    function checkState() {
+        if (state === "num") {
             $("td").removeClass("active");
             $(".num,.b,#clear,#new,#n").addClass("active");
             if (varCount > 0) {
-              $("#del").addClass("active");
+                $("#del").addClass("active");
             }
-          }
-          if (state == "neg") {
+        }
+        if (state == "neg") {
             $("td").removeClass("active");
             $(".num,.b,#clear").addClass("active");
-          }
-          if (state === "numO") {
+        }
+        if (state === "numO") {
             $(".op, #equal, #n").addClass("active");
-          }
-          if (state === "del") {
+        }
+        if (state === "del") {
             $("td").removeClass("active");
-          }
-          $(".var").each(function () {
+        }
+        $(".var").each(function () {
             if ($(this).text() != "") {
-              $(this).addClass("active");
+                $(this).addClass("active");
             }
-          });
-          if (varCount > 0) {
+        });
+        if (varCount > 0) {
             $("#del").addClass("active");
-          }
-          if (operator > 0 && counter > 0) {
+        }
+        if (operator > 0 && counter > 0) {
             $("#equal").addClass("active");
-          }
-          if (operator === 0 && counter >= 1) {
+        }
+        if (operator === 0 && counter >= 1) {
             $("#new").addClass("active");
-          } else {
+        } else {
             $("#new").removeClass("active");
-          }
-          if (state == "equal") {
+        }
+        if (state == "equal") {
             $("td").removeClass("active");
             $("#clear").addClass("active");
-          }
-          if (!isOp && counter > 0) {
-            $("#equal").addClass("active");
-          } else {
-            $("#equal").removeClass("active");
-          }
         }
+        if (!isOp && counter > 0) {
+            $("#equal").addClass("active");
+        } else {
+            $("#equal").removeClass("active");
+        }
+    }
 });
 
 /**
@@ -124,7 +124,7 @@ function newInput() {
         }
     } else if (vnos == 'del') {
         savedVariables = [];
-        for(let i = 0; i < 10; i++) {
+        for (let i = 0; i < 10; i++) {
             let id = '#s' + i;
             $(id).html('');
         }
@@ -141,7 +141,7 @@ function newInput() {
             result = calculate(toCalk);
             input += '=' + result;
         }
-    } else if(/s[0-9]/.test(vnos)){
+    } else if (/s[0-9]/.test(vnos)) {
 
     } else {
         input += vnos;
@@ -164,8 +164,8 @@ function makeToCalk() {
     }
 
     let nums = toCalk.match(/[01]+/g);
-    for(const num of nums) {
-        if(num.length > longest) {
+    for (const num of nums) {
+        if (num.length > longest) {
             longest = num.length;
         }
     }
@@ -206,19 +206,19 @@ function calculate(equation) {
         if (equation.charAt(i) == 'a') {
             equation = equation.replace(/[01]+a[01]+/, and(equation.match(/[01]+a[01]+/)));
             i = 0;
-        }else if (equation.charAt(i) == 'o') {
+        } else if (equation.charAt(i) == 'o') {
             equation = equation.replace(/[01]+o[01]+/, or(equation.match(/[01]+o[01]+/)));
             i = 0;
-        }else if (equation.charAt(i) == 'e') {
+        } else if (equation.charAt(i) == 'e') {
             equation = equation.replace(/[01]+e[01]+/, nand(equation.match(/[01]+e[01]+/)));
             i = 0;
-        }else if (equation.charAt(i) == 'u') {
+        } else if (equation.charAt(i) == 'u') {
             equation = equation.replace(/[01]+u[01]+/, nor(equation.match(/[01]+u[01]+/)));
             i = 0;
-        }else if (equation.charAt(i) == 'x') {
+        } else if (equation.charAt(i) == 'x') {
             equation = equation.replace(/[01]+x[01]+/, xor(equation.match(/[01]+x[01]+/)));
             i = 0;
-        }else if (equation.charAt(i) == 'z') {
+        } else if (equation.charAt(i) == 'z') {
             equation = equation.replace(/[01]+z[01]+/, xnor(equation.match(/[01]+z[01]+/)));
             i = 0;
         }
@@ -431,11 +431,11 @@ function not(equation) {
 function checkInput() {
     if (/[01]+n[01]+/.test(input)) {
         return false;
-    }else if(/[01]+\(/.test(input)){
+    } else if (/[01]+\(/.test(input)) {
         return false;
-    }else if(/\)[01]+/.test(input)){
+    } else if (/\)[01]+/.test(input)) {
         return false;
-    }else if(input.split('(').length - 1 != input.split(')').length - 1) {
+    } else if (input.split('(').length - 1 != input.split(')').length - 1) {
         return false;
     }
 
