@@ -150,8 +150,9 @@ $(document).ready(function () {
  */
 function checkInput(input) {
   let result = -1;
+  //Dobi le številko
   let forCalc = input.substring(1, input.length - 2);
-  if (/^([b][0-1]+[doh])$/.test(input)) {
+  if (c.test(input)) {
     switch (input.charAt(input.length - 1)) {
       case "d":
         result = bTd(forCalc);
@@ -247,7 +248,7 @@ function bTo(input) {
 
   for (let i = digits.length; i > 0; i -= 3) {
     let fourDigits;
-    if (i < 4) {
+    if (i < 3) {
       fourDigits = digits.slice(0, i);
     } else {
       fourDigits = digits.slice(i - 3, i);

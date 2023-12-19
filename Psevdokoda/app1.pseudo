@@ -30,14 +30,14 @@ function calculate('e')
    Nastavi 'total' na rezultat funkcije calculateBracket('e').
    
    if 'total' ni število, do: 
-      vrni "Napaka";
+      return "Napaka";
    
-   vrni pretvoriVniz(total);
+   return pretvoriVniz(total);
    
 function addPriority('input')
    Inicializiraj 'operaterjiVisokePrioritete' na polje: ["×", "÷", "\\^", "%"].
    Inicializiraj 'regex' na regularni izraz: /(\d+\.?\d*)(['operaterjiVisokePrioritete'])(\d+\.?\d*)/g.
-   Okoli vsakega ujemanja v 'input' dodaj  oklepaje in vrni rezultat.
+   Okoli vsakega ujemanja v 'input' dodaj  oklepaje in return rezultat.
 
 function findBracketIndex('e')
    Inicializiraj 'stack' in 'bracketPairs' na prazno polje.
@@ -47,7 +47,7 @@ function findBracketIndex('e')
          else if je 'e[i]' ")", do:
             if 'sklad' ni prazen, do:
                Dodaj  polje z elementoma stack brez zadnjega elementa in 'i' v 'bracketPairs'.
-   Vrni naraščajoče urejeno polje 'bracketPairs'.
+   return naraščajoče urejeno polje 'bracketPairs'.
 
 function calculateBracket('e')
    Inicializiraj  'elements' na prazno polje.
@@ -92,7 +92,7 @@ function calculateBracket('e')
             Nastavi 'result' na 'num1' na potenco 'num2'.
          else if je 'operator' "√", do:
             if je 'num2' negativno število, do:
-               Vrni "Napaka".
+               return "Napaka".
             Nastavi 'result' na 'num1' na potenco 1 / 'num2'.
          else if je 'operator' "×", do:
             Nastavi 'result' na 'num1' pomnoženo z 'num2'.
@@ -105,10 +105,10 @@ function calculateBracket('e')
          else if je 'operator' "-", do:
             Nastavi 'result' na 'num1' minus 'num2'.
          Odstrani 'num1' in 'num2' iz 'elements' in na njuno mesto dodaj 'result'.
-   Vrni 'elements[0]'.
+   return 'elements[0]'.
 
 function isDigit('char')
-   Vrni true, if je 'char' število, else vrni false.
+   return true, if je 'char' število, else return false.
 
 function removeBrackets('e')
    Inicializiraj 'bracketPairs' na rezultat funkcije findBracketIndex('e').
@@ -118,7 +118,7 @@ function removeBrackets('e')
       Inicializiraj 'end' na drugi element 'innermostPair'.
       Inicializiraj 'substring' na podniz 'e' od začetka do 'start', dodaj 'result' in 'substring' na podniz 'e' od 'end' naprej.
       Nastavi 'bracketPairs' na rezultat funkcije findBracketIndex('e').
-   Vrni 'e'.
+   return 'e'.
 
 function handleFile('files'), ki se pokliče, ko uporabnik izbere datoteko za nalaganje
    Inicializiraj 'file' na prvi element iz 'files'.

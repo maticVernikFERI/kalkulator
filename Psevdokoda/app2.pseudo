@@ -1,0 +1,176 @@
+Ko je dokument pripravljen, do:
+    Inicializiraj 'input' ns prazen niz.
+    Inicializiraj 'result' na 0.
+    Ko je katerikoli element 'td' kliknjen, do:
+        Inicializiraj 'vnos' na vrednost elementa 'td'.
+        if je 'input' oblike končne enačbe z rezultatom, do:
+            Nastavi 'input' na prazen niz.
+        
+        if je id kliknjenega elementa "clear", do:
+            Nastavi 'input' na prazen niz.
+        else if 'vnos' je "BIN", "DEC", "HEX" ali "OCT", do:
+            'input'u dodaj prvo črko niza 'vnos' zapisano z malimi črkami.
+        else if 'vnos' je "=", do:
+            'result' nastavi na rezultat checkInput('input').
+            if je 'result' -1, do:
+                Uporabniku sporoči, da je v enačbi napaka.
+            else, do:
+                'input'u dodaj znak "=" in 'result'.
+        else do:
+            'input'u dodaj 'vnos'.
+        Izpiši 'input' s funkcijo display('input').
+
+function checkInput('input')
+    Inicializiraj 'result' na -1
+    Inicializiraj 'forCalc' na substring 'input' od drugega, do predzadnjega znaka.
+    if je 'input' ustreza regularnemu izrazu /^([b][0-1]+[doh])$/, do:
+        if je zadnja črka 'input' "d", do:
+            'result' nastavi na rezultat funkcije bTd('forCalc').
+        else if je zadnja črka 'input' "h", do:
+            'result' nastavi na rezultat funkcije bTh('forCalc').
+        else if je zadnja črka 'input' "o", do:
+            'result' nastavi na rezultat funkcije bTo('forCalc').
+    else if je 'input' ustreza regularnemu izrazu /^([d][0-9]+[boh])$/, do:
+        if je zadnja črka 'input' "b", do:
+            'result' nastavi na rezultat funkcije dTb('forCalc').
+        else if je zadnja črka 'input' "h", do:
+            'result' nastavi na rezultat funkcije dTh('forCalc').
+        else if je zadnja črka 'input' "o", do:
+            'result' nastavi na rezultat funkcije dTo('forCalc').
+    else if je 'input' ustreza regularnemu izrazu /^([h][0-9A-F]+[dob])$/, do:
+        if je zadnja črka 'input' "b", do:
+            'result' nastavi na rezultat funkcije hTb('forCalc').
+        else if je zadnja črka 'input' "d", do:
+            'result' nastavi na rezultat funkcije hTd('forCalc').
+        else if je zadnja črka 'input' "o", do:
+            'result' nastavi na rezultat funkcije hTo('forCalc').
+    else if je 'input' ustreza regularnemu izrazu /^([o][0-7]+[dbh])$/, do:
+        if je zadnja črka 'input' "b", do:
+            'result' nastavi na rezultat funkcije oTb('forCalc').
+        else if je zadnja črka 'input' "d", do:
+            'result' nastavi na rezultat funkcije oTd('forCalc').
+        else if je zadnja črka 'input' "h", do:
+            'result' nastavi na rezultat funkcije oTh('forCalc').
+    return 'result'.
+
+function bTd('input')
+    Inicializiraj 'digits' na posamezne števke 'input'.
+    Inicializiraj 'result' na 0.
+    for vsako števko v 'digits'
+        Dodaj (trenutna števka * 2 na potenco (skupno število števk - trenutni indeks - 1)) k 'result'
+    return 'result'.
+function bTh('input')
+    Inicializiraj 'digits' na posamezne števke 'input'.
+    Inicializiraj 'result' na 0.
+    for vsak i od dolžine digits do 0 s korakom -4, do:
+        Definiraj 'fourDigits'.
+        if je i < 4, nastavi fourDigits na števke iz 'digits' prve do i.
+        else, nastavi fourDigits na 4 števke iz 'digits' od i-4 do i.
+    Inicializiraj 'hexResult' na 0
+    for vsako števko v 'fourDigits'
+        Dodaj (trenutna vrednost * 2 na potenco (dolžina 'fourDigits' - (indeks števke + 1))) k 'hexResult'
+    if je 'hexResult' > 9
+        Nastavi 'hexResult' na ustrezno črko - 10 -> "A", 11 -> "B".
+    Dodaj 'hexResult' na začetek 'result'.
+    return 'result'.
+
+function bTo('input')
+    Inicializiraj 'digits' na posamezne števke 'input'.
+    Inicializiraj 'result' na 0.
+    for vsak i od dolžine digits do 0 s korakom -3, do:
+        Definiraj 'fourDigits'.
+        if je i < 3, nastavi 'fourDigits' na  števke iz 'digits' od prve do i.
+        else, nastavi 'fourDigits' na 3 števke iz 'digits' od i-3 do i.
+        Inicializiraj 'hexResult' na 0.
+        for vsako števko v 'fourDigits'
+            Dodaj (trenutna vrednost * 2 na potenco (dolžina 'fourDigits' - (indeks števke + 1))) k 'hexResult'.
+        Dodaj octResult na začetek result.
+    return 'result'.
+
+function dTb('input')
+    Inicializiraj 'result' na prazen niz.
+    if je input enak 0, Nastavi 'result' na "0".
+    while je 'input' > 0
+        Dodaj (ostanek pri deljenju 'input' z 2) na začetek 'result'.
+        Nastavi 'input' na 'input' / 2.
+    return 'result'.
+
+function dTh('input')
+    Inicializiraj 'result' na prazen niz.
+    if je input enak 0, Nastavi 'result' na "0".
+    while je 'input' > 0
+        Nastavi 'hexResult' na ostanek pri deljenju 'input' z 16.
+        if je 'hexResult' >  9, nastavi 'hexResult' na ustrezno črko - 10 -> "A", 11 -> "B".
+        Dodaj 'hexResult' na začetek 'result'.
+        Nastavi 'input' na 'input' / 16.
+    return 'result'.
+
+function dTo('input')
+    Inicializiraj 'result' na prazen niz.
+    if je input enak 0, Nastavi 'result' na "0".
+    while je 'input' > 0
+        Dodaj (ostanek pri deljenju 'input' z 8) na začetek 'result'.
+        Nastavi 'input' na 'input' / 8.
+    return 'result'.
+
+function hTb('input')
+    Inicializiraj 'result' na prazen niz.
+    for vsak znak 'char' v input
+        Dodaj 'result' 4 števke ustrezne vrednosti znaka 'char' - "0" -> "0000", "1" -> "0001", "2" -> "0010", ..., "D" -> "1101", "E" -> "1110", "F" -> "1111".
+    return 'result'.
+
+function hTd('input')
+    Inicializiraj 'result' na 0.
+    for vsak znak v 'input', do:
+        Nastavi 'hexDigit' na trenutni znak.
+        if je 'hexDigit' črka, do:
+            Nastavi 'hexDigit' na ustrezno števko - "A" -> 10, "B" -> 11, ..., "F" -> 15.
+        Dodaj ('hexDigit' * 16 na potenco (dolžina input - (indeks znaka iz 'input' + 1))) k 'result'.
+    return 'result'.
+
+function hTo('input')
+    Kliči funkcijo hTd('input') in vrni rezultat v spremenljivko 'decimal'.
+    Kliči funkcijo dTo('decimal') in vrni rezultat.
+
+function oTb('input')
+    Inicializiraj 'result' na prazen niz.
+    for vsak znak 'char' v input
+        Dodaj 'result' 3 števke ustrezne vrednosti znaka 'char' - "0" -> "000", "1" -> "001", "2" -> "010", ..., "6" -> "110", "7" -> "111".
+    return 'result'.
+
+function oTd('input')
+    Inicializiraj 'result' na 0.
+    for vsak znak v 'input', do:
+        Nastavi 'octDigit' na trenutni znak.
+        Dodaj ('octDigit' * 8 na potenco (dolžina input - (indeks znaka iz 'input' + 1))) k 'result'.
+    return 'result'.
+
+function oTh('input')
+    Kliči funkcijo oTd('input') in vrni rezultat v spremenljivko 'decimal'.
+    Kliči funkcijo dTh('decimal') in vrni rezultat.
+
+function display('input')
+    Za vsak znak 'char' v input, do:
+        if je 'char' "b", dodaj " BIN " k output
+        if je 'char' "d", dodaj " DEC " k output
+        if je 'char' "h", dodaj " HEX " k output
+        if je 'char' "o", dodaj " OCT " k output
+        if je 'char' "=", dodaj "= " k output
+        else dodaj 'char' k output
+
+function handleFile('files'), ki se pokliče, ko uporabnik izbere datoteko za nalaganje
+    Inicializiraj 'file' na prvi element iz 'files'.
+    Inicializiraj 'reader' na novo instanco 'FileReader'.
+    Ko se 'reader' prebere vsebino datoteke, zaženi funkcijo s parametrom 'e', ki je element, ki ga prebere 'reader'., do:
+    Inicializiraj 'contents' na vsebino prebrane datoteke.
+    Inicializiraj 'lines' na polje z vsemi vrsticami v 'contents'.
+    Odstrani vse presldeke - white space charachter iz vsake vrstice v 'lines'.
+    Nastavi transformedLines na novo polje, ki ga dobimo tako, da za vsako vrstico v lines, do:
+        Zamenjamo "BIN" z "b"
+        Zamenjamo "OCT" z "o"
+        Zamenjamo "HEX" z "h"
+        Zamenjamo "DEC" z "d"
+        Odstranimo vse presledke
+        Odstranimo "=" na koncu vrstice
+    Vsako vrstico v 'lines' skupaj z njenim rezultatom iz funkcije checkInput('transformedLines z istim indeksom kot trenutna linija iz 'lines'') izpiše na zaslon.
+    'reader' preberi vsebino datoteke kot besedilo.
