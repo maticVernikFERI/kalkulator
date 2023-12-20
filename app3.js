@@ -247,7 +247,7 @@ function xnor(equation) {
     }
 
     for (let i = 0; i < dig1.length; i++) {
-        if (dig1.charAt(i) + dig2.charAt(i) % 2 == 0) {
+        if ((dig1.charAt(i) + dig2.charAt(i)) % 2 == 0) {
             result += '1';
         } else {
             result += '0';
