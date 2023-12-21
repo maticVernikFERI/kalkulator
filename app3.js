@@ -37,11 +37,8 @@ $(document).ready(function () {
         });
         $("#del").click(() => {
           $("td").removeClass("active");
-          $(".var").addClass("active");
-          $(".var").click(function () {
-            $(this).html("");
-            $(this).removeClass("active");
-          });
+          $(".var").removeClass("active").html("");
+          
           varCount = 0;
           state = "num";
           checkState();
