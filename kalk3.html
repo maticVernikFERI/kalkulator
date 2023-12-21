@@ -68,5 +68,17 @@
         </tr>
       </table>
     </div>
+            <div>
+            <button onclick="document.getElementById('fileInput').click()">
+                Upload Text File
+            </button>
+            <input
+                type="file"
+                id="fileInput"
+                accept=".txt"
+                style="display: none"
+                onchange="handleFile(this.files)" />
+            <div id="text-results"></div>
+        </div>
   </body>
 </html>
