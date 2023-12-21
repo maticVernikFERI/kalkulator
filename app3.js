@@ -505,6 +505,8 @@ function display(input) {
 }
 
 function handleFile(files) {
+    $("#display").html("");
+    input = "";
     var file = files[0];
     var reader = new FileReader();
     reader.onload = function (e) {
@@ -513,12 +515,12 @@ function handleFile(files) {
         var transformedLines = lines.map(function (line) {
             return line
                 .replace(/NEG/g, "n")
-                .replace(/AND/g, "a")
-                .replace(/OR/g, "o")
                 .replace(/NAND/g, "e")
-                .replace(/NOR/g, "u")
                 .replace(/XOR/g, "x")
                 .replace(/XNOR/g, "z")
+                .replace(/NOR/g, "u")
+                .replace(/AND/g, "a")
+                .replace(/OR/g, "o")
                 .replace(/\s/g, "")
                 .replace(/=$/, "");
         });
@@ -526,7 +528,9 @@ function handleFile(files) {
         $("#text-results").append(
             lines
                 .map(function (line) {
-                    var result = checkInput(transformedLines[lines.indexOf(line)]);
+                    toCalk = transformedLines[lines.indexOf(line)];
+                    makeToCalk();
+                    let result = calculate(toCalk);
                     return "<p>" + line + " = " + result + "</p>";
                 })
                 .join("")
